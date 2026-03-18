@@ -237,28 +237,26 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, on
 import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ── PASTE YOUR FIREBASE CONFIG HERE ──
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCaXRtutZ8oJbJIME8mfUf3lFyIcyq5vzo",
-  authDomain: "yummylicious-b58c8.firebaseapp.com",
-  projectId: "yummylicious-b58c8",
-  storageBucket: "yummylicious-b58c8.firebasestorage.app",
-  messagingSenderId: "18438308478",
-  appId: "1:18438308478:web:245ac251940787ee888e2f",
-  measurementId: "G-EVGNQ9T4LT"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Redirect if already logged in (with small delay to avoid flash)
-let authReady = false;
+// Only redirect if already logged in on fresh page load
+// Do NOT redirect during active signup/login process
+let isAuthenticating = false;
 onAuthStateChanged(auth, user => {
-  if (user && authReady) window.location.href = 'index.html';
-  authReady = true;
+  if (user && !isAuthenticating) {
+    window.location.href = 'index.html';
+  }
 });
 
 window.login = async function() {
@@ -270,6 +268,7 @@ window.login = async function() {
 
   if (!email || !password) { showMsg('loginMsg', 'Please fill in all fields.', 'error'); return; }
 
+  isAuthenticating = true;
   btn.disabled = true;
   btn.textContent = 'Logging in…';
   try {
@@ -277,6 +276,7 @@ window.login = async function() {
     showMsg('loginMsg', 'Login successful! Redirecting…', 'success');
     setTimeout(() => window.location.href = 'index.html', 1000);
   } catch(e) {
+    isAuthenticating = false;
     showMsg('loginMsg', friendlyError(e.code), 'error');
     btn.disabled = false;
     btn.textContent = 'Login';
@@ -292,11 +292,11 @@ window.signup = async function() {
   if (!name || !email || !password) { showMsg('signupMsg', 'Please fill in all fields.', 'error'); return; }
   if (password.length < 6) { showMsg('signupMsg', 'Password must be at least 6 characters.', 'error'); return; }
 
+  isAuthenticating = true;
   btn.disabled = true;
   btn.textContent = 'Creating account…';
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
-    // Create Firestore user document with 100 free tokens
     await setDoc(doc(db, 'users', cred.user.uid), {
       name,
       email,
@@ -307,6 +307,7 @@ window.signup = async function() {
     showMsg('signupMsg', '🎉 Account created! You got 100 free tokens. Redirecting…', 'success');
     setTimeout(() => window.location.href = 'index.html', 1500);
   } catch(e) {
+    isAuthenticating = false;
     showMsg('signupMsg', friendlyError(e.code), 'error');
     btn.disabled = false;
     btn.textContent = 'Create Account';

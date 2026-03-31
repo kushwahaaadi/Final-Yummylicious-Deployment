@@ -5,185 +5,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | Yummylicious</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --orange: #FF6B00;
-  --orange-light: #FF9240;
-  --orange-glow: rgba(255,107,0,0.18);
-  --dark: #0D0D0D;
-  --card-bg: rgba(18,18,18,0.95);
-  --surface: rgba(30,30,30,0.9);
-  --text: #F5F0EB;
-  --muted: #A09890;
-  --error: #ef4444;
-  --success: #22c55e;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* Login-specific overrides */
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: #0D0D0D;
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-body::before {
-  content: '';
-  position: fixed;
-  top: -20%; right: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,107,0,0.12) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 100vh; padding: 20px;
+  background: linear-gradient(160deg, #1a0a00 0%, #0D0D0D 50%, #0a0a1a 100%);
 }
 body::after {
-  content: '';
-  position: fixed;
-  bottom: -20%; left: -10%;
+  content: ''; position: fixed; bottom: -20%; left: -10%;
   width: 500px; height: 500px;
   background: radial-gradient(circle, rgba(255,107,0,0.07) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
-
 .brand {
-  font-family: 'Syne', sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--orange);
-  letter-spacing: 2px;
-  margin-bottom: 32px;
-  position: relative;
-  z-index: 1;
-  text-decoration: none;
-}
-
-.card {
-  position: relative;
-  z-index: 1;
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 20px;
-  padding: 40px;
-  width: 100%;
-  max-width: 440px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-}
-
-.tabs {
-  display: flex;
-  background: rgba(255,255,255,0.04);
-  border-radius: 12px;
-  padding: 4px;
-  margin-bottom: 32px;
-  gap: 4px;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 10px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 9px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.tab-btn.active {
-  background: var(--orange);
-  color: white;
-}
-
-.form-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.form-sub {
-  font-size: 14px;
-  color: var(--muted);
-  margin-bottom: 28px;
-}
-
-.form-group { margin-bottom: 18px; }
-.form-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
+  font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800;
+  color: var(--orange); letter-spacing: 2px; margin-bottom: 28px;
+  position: relative; z-index: 1; text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+}
+.auth-card {
+  position: relative; z-index: 1;
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px; padding: 36px 40px; width: 100%; max-width: 440px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+}
+.tabs {
+  display: flex; background: rgba(255,255,255,0.04);
+  border-radius: 12px; padding: 4px; margin-bottom: 28px; gap: 4px;
+}
+.tab-btn {
+  flex: 1; padding: 10px; background: none; border: none;
+  color: var(--muted); font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 600; border-radius: 9px;
+  cursor: pointer; transition: all 0.2s;
+}
+.tab-btn.active { background: var(--orange); color: white; }
+.form-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.form-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-size: 12px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
 }
 .form-group input {
-  width: 100%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  padding: 13px 16px;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s;
+  width: 100%; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1); color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  padding: 13px 16px; border-radius: 10px; outline: none; transition: border-color 0.2s;
 }
 .form-group input:focus { border-color: var(--orange); }
 .form-group input::placeholder { color: rgba(160,152,144,0.6); }
-
 .submit-btn {
-  width: 100%;
-  padding: 14px;
-  background: var(--orange);
-  border: none;
-  color: white;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 8px;
+  width: 100%; padding: 14px; background: var(--orange); border: none; color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700;
+  border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-top: 6px;
 }
-.submit-btn:hover { background: var(--orange-light); transform: translateY(-1px); }
+.submit-btn:hover:not(:disabled) { background: var(--orange-light); transform: translateY(-1px); }
 .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-.msg {
-  margin-top: 16px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  display: none;
-}
-.msg.error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: var(--error); display: block; }
-.msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: var(--success); display: block; }
-
 .token-info {
-  margin-top: 20px;
-  padding: 14px 16px;
-  background: var(--orange-glow);
-  border: 1px solid rgba(255,107,0,0.25);
-  border-radius: 10px;
-  font-size: 13px;
-  color: var(--orange-light);
-  text-align: center;
-  line-height: 1.5;
+  margin-top: 18px; padding: 14px 16px;
+  background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.25);
+  border-radius: 10px; font-size: 13px; color: var(--orange-light);
+  text-align: center; line-height: 1.6;
 }
-.token-info strong { font-size: 18px; display: block; margin-bottom: 2px; }
+.token-info strong { font-size: 17px; display: block; margin-bottom: 2px; }
 </style>
 </head>
 <body>
 
 <a href="index.html" class="brand">YUMMYLICIOUS</a>
 
-<div class="card">
+<div class="auth-card">
   <div class="tabs">
     <button class="tab-btn active" id="loginTab" onclick="showTab('login')">Login</button>
     <button class="tab-btn" id="signupTab" onclick="showTab('signup')">Sign Up</button>
@@ -230,13 +125,11 @@ body::after {
   </div>
 </div>
 
-<!-- Firebase SDKs -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── PASTE YOUR FIREBASE CONFIG HERE ──
 const firebaseConfig = {
   apiKey: "AIzaSyCaXRtutZ8oJbJIME8mfUf3lFyIcyq5vzo",
   authDomain: "yummylicious-b58c8.firebaseapp.com",
@@ -250,36 +143,28 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Only redirect if already logged in on fresh page load
-// Do NOT redirect during active signup/login process
 let isAuthenticating = false;
+
+// Only auto-redirect if not in the middle of auth
 onAuthStateChanged(auth, user => {
-  if (user && !isAuthenticating) {
-    window.location.href = 'index.html';
-  }
+  if (user && !isAuthenticating) window.location.href = 'index.html';
 });
 
 window.login = async function() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
   const btn = document.getElementById('loginBtn');
-  const msg = document.getElementById('loginMsg');
-  msg.className = 'msg';
-
   if (!email || !password) { showMsg('loginMsg', 'Please fill in all fields.', 'error'); return; }
-
   isAuthenticating = true;
-  btn.disabled = true;
-  btn.textContent = 'Logging in…';
+  btn.disabled = true; btn.textContent = 'Logging in…';
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    showMsg('loginMsg', 'Login successful! Redirecting…', 'success');
-    setTimeout(() => window.location.href = 'index.html', 1000);
+    showMsg('loginMsg', '✅ Login successful! Redirecting…', 'success');
+    setTimeout(() => window.location.href = 'index.html', 900);
   } catch(e) {
     isAuthenticating = false;
     showMsg('loginMsg', friendlyError(e.code), 'error');
-    btn.disabled = false;
-    btn.textContent = 'Login';
+    btn.disabled = false; btn.textContent = 'Login';
   }
 };
 
@@ -288,36 +173,27 @@ window.signup = async function() {
   const email = document.getElementById('signupEmail').value.trim();
   const password = document.getElementById('signupPassword').value;
   const btn = document.getElementById('signupBtn');
-
   if (!name || !email || !password) { showMsg('signupMsg', 'Please fill in all fields.', 'error'); return; }
   if (password.length < 6) { showMsg('signupMsg', 'Password must be at least 6 characters.', 'error'); return; }
-
   isAuthenticating = true;
-  btn.disabled = true;
-  btn.textContent = 'Creating account…';
+  btn.disabled = true; btn.textContent = 'Creating account…';
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await setDoc(doc(db, 'users', cred.user.uid), {
-      name,
-      email,
-      tokens: 100,
-      createdAt: serverTimestamp(),
-      role: 'student'
+      name, email, tokens: 100, createdAt: serverTimestamp(), role: 'student'
     });
     showMsg('signupMsg', '🎉 Account created! You got 100 free tokens. Redirecting…', 'success');
-    setTimeout(() => window.location.href = 'index.html', 1500);
+    setTimeout(() => window.location.href = 'index.html', 1400);
   } catch(e) {
     isAuthenticating = false;
     showMsg('signupMsg', friendlyError(e.code), 'error');
-    btn.disabled = false;
-    btn.textContent = 'Create Account';
+    btn.disabled = false; btn.textContent = 'Create Account';
   }
 };
 
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
-  el.textContent = text;
-  el.className = 'msg ' + type;
+  el.textContent = text; el.className = 'msg ' + type;
 }
 
 function friendlyError(code) {

@@ -5,273 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YUMMYLICIOUS – Campus Food Courts</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --orange: #FF6B00;
-  --orange-light: #FF9240;
-  --orange-glow: rgba(255,107,0,0.18);
-  --dark: #0D0D0D;
-  --card-bg: rgba(18,18,18,0.85);
-  --surface: rgba(30,30,30,0.9);
-  --text: #F5F0EB;
-  --muted: #A09890;
-  --veg: #22c55e;
-  --nonveg: #ef4444;
-  --radius: 16px;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-body::before {
-  content: ''; position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0; opacity: 0.6;
-}
-.main { position: relative; min-height: 100vh; background: linear-gradient(160deg, #1a0a00 0%, #0D0D0D 50%, #0a0a1a 100%); }
-.main::after {
-  content: ''; position: fixed; top: -30%; right: -10%; width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,107,0,0.12) 0%, transparent 70%);
-  pointer-events: none; z-index: 0;
-}
-
-/* ── NAVBAR ── */
-.navbar {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 5%; height: 70px;
-  background: rgba(13,13,13,0.85); backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,107,0,0.15);
-  gap: 12px;
-}
-.logo { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; flex-shrink: 0; }
-.nav-center { display: flex; gap: 4px; }
-.nav-center a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; padding: 8px 14px; border-radius: 8px; transition: all 0.2s; }
-.nav-center a:hover, .nav-center a.active { color: var(--orange); background: var(--orange-glow); }
-
-.nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-
-/* Token pill shown when logged in */
-.token-pill {
-  display: none; align-items: center; gap: 6px;
-  background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.3);
-  color: var(--orange-light); font-weight: 700; font-size: 13px;
-  padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;
-}
-.token-pill:hover { background: rgba(255,107,0,0.25); }
-.token-pill.visible { display: flex; }
-
-.cart-pill {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--orange); color: white; font-weight: 700; font-size: 14px;
-  padding: 8px 18px; border-radius: 999px; cursor: pointer; border: none;
-  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-}
-.cart-pill:hover { background: var(--orange-light); transform: scale(1.04); }
-.cart-pill svg { width: 16px; height: 16px; }
-
-.login-btn {
-  background: none; border: 1px solid rgba(255,255,255,0.15); color: var(--muted);
-  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
-  padding: 8px 18px; border-radius: 999px; cursor: pointer; transition: all 0.2s;
-}
-.login-btn:hover { border-color: var(--orange); color: var(--orange); }
-
-.user-menu-btn {
-  display: none; align-items: center; gap: 8px;
-  background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-  padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;
-}
-.user-menu-btn:hover { border-color: rgba(255,107,0,0.3); }
-.user-menu-btn.visible { display: flex; }
-.user-avatar {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: var(--orange); color: white; font-size: 11px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-
-/* ── HERO ── */
-.hero { position: relative; z-index: 1; text-align: center; padding: 80px 5% 60px; }
-.hero-badge {
-  display: inline-block; background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.4);
-  color: var(--orange-light); font-size: 12px; font-weight: 600; letter-spacing: 3px;
-  text-transform: uppercase; padding: 6px 18px; border-radius: 999px; margin-bottom: 24px;
-}
-.hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(48px, 8vw, 96px); font-weight: 800; line-height: 0.95; color: var(--text); margin-bottom: 24px; }
-.hero h1 span { color: var(--orange); }
-.hero p { color: var(--muted); font-size: 18px; max-width: 480px; margin: 0 auto; }
-
-/* ── COURTS SECTION ── */
-.courts-section { position: relative; z-index: 1; padding: 0 5% 80px; }
-.section-label { font-family: 'Syne', sans-serif; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
-.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(255,107,0,0.4), transparent); }
-
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-.card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; cursor: pointer; backdrop-filter: blur(12px); }
-.card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,107,0,0.3); border-color: rgba(255,107,0,0.3); }
-.card-img { width: 100%; height: 200px; overflow: hidden; position: relative; }
-.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-.card:hover .card-img img { transform: scale(1.08); }
-.card-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,0.6) 0%, transparent 60%); }
-.card-body { padding: 20px; }
-.card-cuisine { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-light); margin-bottom: 8px; }
-.card-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-.card-desc { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
-.card-btn { width: 100%; padding: 12px; background: var(--orange); border: none; color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
-.card-btn:hover { background: var(--orange-light); transform: translateY(-1px); }
-
-/* ── ORDER PAGE ── */
-.order-page { display: none; position: relative; z-index: 1; min-height: calc(100vh - 70px); padding: 0 5% 60px; background: linear-gradient(160deg, #1a0a00 0%, #0D0D0D 60%, #0a0a1a 100%); }
-.order-header { display: flex; justify-content: space-between; align-items: center; padding: 40px 0 32px; gap: 20px; }
-.back-btn { display: flex; align-items: center; gap: 8px; background: none; border: 1px solid rgba(255,255,255,0.15); color: var(--text); padding: 10px 20px; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; transition: all 0.2s; }
-.back-btn:hover { border-color: var(--orange); color: var(--orange); }
-.order-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 5vw, 48px); font-weight: 800; color: var(--orange); text-align: center; }
-
-/* ── SEARCH ── */
-.search-bar-wrapper { margin-bottom: 28px; }
-.search-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-.search-input-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); width: 18px; height: 18px; }
-.search-input { width: 100%; background: var(--surface); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 12px 16px 12px 44px; border-radius: 12px; outline: none; transition: border-color 0.2s; }
-.search-input::placeholder { color: var(--muted); }
-.search-input:focus { border-color: var(--orange); }
-.filter-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-.filter-btn { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: var(--surface); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.filter-btn.active-all { border-color: var(--orange); color: var(--orange); background: var(--orange-glow); }
-.filter-btn.active-veg { border-color: var(--veg); color: var(--veg); background: rgba(34,197,94,0.12); }
-.filter-btn.active-nonveg { border-color: var(--nonveg); color: var(--nonveg); background: rgba(239,68,68,0.12); }
-.dot { width: 8px; height: 8px; border-radius: 50%; }
-.dot-veg { background: var(--veg); }
-.dot-nonveg { background: var(--nonveg); }
-.results-count { font-size: 13px; color: var(--muted); margin-top: 12px; }
-.results-count span { color: var(--orange); font-weight: 600; }
-
-/* ── DISH CARDS ── */
-.dishes-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-.dish-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); overflow: hidden; transition: transform 0.25s, border-color 0.25s; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
-.dish-card:hover { transform: translateY(-4px); border-color: rgba(255,107,0,0.25); }
-.dish-img-wrap { width: 100%; height: 140px; overflow: hidden; }
-.dish-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-.dish-card:hover .dish-img-wrap img { transform: scale(1.06); }
-.dish-body { padding: 14px; flex: 1; display: flex; flex-direction: column; }
-.dish-type-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid; margin-bottom: 8px; flex-shrink: 0; }
-.dish-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; flex: 1; }
-.dish-price { font-size: 16px; font-weight: 700; color: var(--orange); margin-bottom: 12px; }
-.qty-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-.qty-btn { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,107,0,0.15); border: 1px solid rgba(255,107,0,0.3); color: var(--orange); font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
-.qty-btn:hover { background: rgba(255,107,0,0.3); }
-.qty-num { font-size: 15px; font-weight: 700; min-width: 24px; text-align: center; }
-.add-btn { width: 100%; padding: 9px; background: var(--orange); border: none; color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-.add-btn:hover { background: var(--orange-light); }
-.add-btn.added { background: var(--veg); }
-.no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--muted); }
-.no-results h3 { font-family: 'Syne', sans-serif; font-size: 20px; margin-bottom: 8px; color: var(--text); }
-
-/* ── CART POPUP ── */
-.cart-popup { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
-.cart-popup.open { display: flex; }
-.cart-box { background: #141414; border: 1px solid rgba(255,107,0,0.3); border-radius: 20px; width: 100%; max-width: 560px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
-.cart-head { display: flex; justify-content: space-between; align-items: center; padding: 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.cart-head h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--orange); }
-.cart-close { background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer; line-height: 1; transition: color 0.2s; }
-.cart-close:hover { color: var(--text); }
-.cart-items-scroll { flex: 1; overflow-y: auto; padding: 16px 28px; }
-.cart-items-scroll::-webkit-scrollbar { width: 4px; }
-.cart-items-scroll::-webkit-scrollbar-thumb { background: rgba(255,107,0,0.3); border-radius: 4px; }
-.empty-cart-msg { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 15px; }
-.empty-cart-msg .icon { font-size: 48px; margin-bottom: 12px; }
-.cart-item-row { display: grid; grid-template-columns: 1fr auto auto auto auto; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
-.cart-item-name { font-weight: 600; }
-.cart-item-price { color: var(--muted); white-space: nowrap; }
-.cart-item-qty { text-align: center; font-weight: 700; color: var(--orange); }
-.cart-item-total { font-weight: 700; white-space: nowrap; }
-.cart-item-remove { color: rgba(239,68,68,0.6); cursor: pointer; font-size: 18px; transition: color 0.2s; }
-.cart-item-remove:hover { color: var(--nonveg); }
-.cart-footer { padding: 20px 28px 28px; border-top: 1px solid rgba(255,255,255,0.08); }
-.total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 14px; color: var(--muted); }
-.grand-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
-.grand-row span:first-child { font-size: 18px; font-weight: 600; }
-.grand-row span:last-child { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--orange); }
-
-/* Token balance in cart */
-.balance-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px; background: var(--orange-glow);
-  border: 1px solid rgba(255,107,0,0.2); border-radius: 10px; margin-bottom: 14px; font-size: 14px;
-}
-.balance-row .bal-label { color: var(--muted); }
-.balance-row .bal-val { font-weight: 700; color: var(--orange-light); }
-.insufficient { color: var(--nonveg); font-size: 13px; margin-bottom: 12px; font-weight: 600; display: none; }
-
-.checkout-btn { width: 100%; padding: 16px; background: var(--orange); border: none; color: white; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
-.checkout-btn:hover:not(:disabled) { background: var(--orange-light); transform: translateY(-1px); }
-.checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-/* ── WALLET / PROFILE POPUP ── */
-.overlay-popup { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
-.overlay-popup.open { display: flex; }
-.popup-box { background: #141414; border: 1px solid rgba(255,107,0,0.3); border-radius: 20px; width: 100%; max-width: 480px; padding: 36px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); max-height: 85vh; overflow-y: auto; }
-.popup-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
-.popup-head h2 { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--orange); }
-.popup-close { background: none; border: none; color: var(--muted); font-size: 22px; cursor: pointer; transition: color 0.2s; }
-.popup-close:hover { color: var(--text); }
-
-/* Wallet card */
-.wallet-card {
-  background: linear-gradient(135deg, rgba(255,107,0,0.12), rgba(255,107,0,0.04));
-  border: 1px solid rgba(255,107,0,0.25); border-radius: 16px;
-  padding: 28px; text-align: center; margin-bottom: 28px;
-}
-.wallet-name { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
-.wallet-balance { font-family: 'Syne', sans-serif; font-size: 56px; font-weight: 800; color: var(--orange); line-height: 1; }
-.wallet-sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
-
-/* Redeem voucher */
-.redeem-section { margin-bottom: 28px; }
-.redeem-section h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 14px; }
-.redeem-row { display: flex; gap: 10px; }
-.redeem-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 12px 16px; border-radius: 10px; outline: none; text-transform: uppercase; letter-spacing: 1px; transition: border-color 0.2s; }
-.redeem-input:focus { border-color: var(--orange); }
-.redeem-btn { padding: 12px 20px; background: var(--orange); border: none; color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; border-radius: 10px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-.redeem-btn:hover { background: var(--orange-light); }
-
-/* Order history */
-.history-section h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 14px; }
-.order-history-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; margin-bottom: 10px; }
-.oh-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.oh-total { font-weight: 700; color: var(--orange); }
-.oh-date { font-size: 12px; color: var(--muted); }
-.oh-items { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.oh-tokens { font-size: 12px; color: rgba(255,107,0,0.7); margin-top: 4px; }
-
-.logout-link { width: 100%; padding: 12px; margin-top: 12px; background: none; border: 1px solid rgba(239,68,68,0.25); color: rgba(239,68,68,0.7); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.2s; }
-.logout-link:hover { border-color: var(--nonveg); color: var(--nonveg); background: rgba(239,68,68,0.07); }
-
-.msg { padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; margin-top: 10px; display: none; }
-.msg.error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; display: block; }
-.msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #22c55e; display: block; }
-
-/* ── CONTACT POPUP ── */
-.contact-popup-box { background: #141414; border: 1px solid rgba(255,107,0,0.3); border-radius: 20px; width: 100%; max-width: 480px; padding: 36px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
-.contact-popup-box h2 { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--orange); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,107,0,0.2); display: flex; justify-content: space-between; align-items: center; }
-.form-group { margin-bottom: 18px; }
-.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 12px 16px; border-radius: 10px; outline: none; transition: border-color 0.2s; }
-.form-group input:focus, .form-group textarea:focus { border-color: var(--orange); }
-.form-group textarea { min-height: 110px; resize: vertical; }
-.popup-close-x { background: none; border: none; color: var(--muted); font-size: 22px; cursor: pointer; }
-
-/* ── TOAST ── */
-.toast { position: fixed; bottom: 30px; right: 30px; background: #1a1a1a; border: 1px solid rgba(255,107,0,0.4); color: var(--text); padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; z-index: 9999; transform: translateY(20px); opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-.toast.show { opacity: 1; transform: translateY(0); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  .nav-center { display: none; }
-  .cards-grid { grid-template-columns: 1fr; }
-  .dishes-container { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .order-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -296,13 +30,30 @@ body::before {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           Cart <span id="cart-count">0</span>
         </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </nav>
+
+    <!-- Mobile nav drawer -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#" onclick="toggleMobileMenu()">Home</a>
+      <a href="about.html" onclick="toggleMobileMenu()">About</a>
+      <a href="#" id="mobile-contact-link" onclick="toggleMobileMenu()">Contact</a>
+    </div>
 
     <div class="hero">
       <div class="hero-badge">Bennett University · Campus Food Courts</div>
       <h1>Eat <span>Well,</span><br>Study More</h1>
-      <p>Skip the queue. Order from your favourite campus food court and pay with tokens.</p>
+      <p>Skip the queue. Order from your favourite campus food court, pick a time slot, and pay with tokens.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-lbl">Food Courts</span></div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat"><span class="hero-stat-num">500+</span><span class="hero-stat-lbl">Menu Items</span></div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat"><span class="hero-stat-num">0</span><span class="hero-stat-lbl">Minutes Wasted</span></div>
+      </div>
     </div>
 
     <div class="courts-section">
@@ -364,6 +115,22 @@ body::before {
         </div>
       </div>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">Yummylicious</div>
+          <p class="footer-tagline">Skip the queue. Eat better.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#">Home</a>
+          <a href="about.html">About</a>
+          <a href="#" id="footer-contact-link">Contact</a>
+        </div>
+        <div class="footer-copy">© 2025 · Made for students, by students · Bennett University</div>
+      </div>
+    </footer>
   </div>
 </div>
 
@@ -372,7 +139,7 @@ body::before {
   <nav class="navbar">
     <div class="logo">Yummylicious</div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <div class="token-pill" id="tokenPill2" onclick="openWallet()" style="display:none;">🪙 <span id="tokenBalance2">0</span></div>
+      <div class="token-pill" id="tokenPill2" onclick="openWallet()">🪙 <span id="tokenBalance2">0</span></div>
       <button class="back-btn" onclick="showMainPage()">← Back</button>
       <button class="cart-pill" onclick="openCart()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
@@ -380,10 +147,10 @@ body::before {
       </button>
     </div>
   </nav>
-  <div style="padding:0 5%;">
+  <div class="order-inner">
     <div class="order-header">
       <div>
-        <div id="orderCuisineLabel" style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;font-weight:600;"></div>
+        <div id="orderCuisineLabel" class="order-cuisine-lbl"></div>
         <h2 class="order-title" id="orderTitle"></h2>
       </div>
     </div>
@@ -413,6 +180,13 @@ body::before {
       <button class="cart-close" onclick="closeCart()">✕</button>
     </div>
     <div class="cart-items-scroll" id="cartItemsScroll"></div>
+
+    <!-- TIME SLOT PICKER -->
+    <div class="timeslot-section" id="timeslotSection">
+      <div class="timeslot-label">⏱️ Pick a Pickup Time Slot</div>
+      <div class="timeslot-grid" id="timeslotGrid"></div>
+    </div>
+
     <div class="cart-footer">
       <div class="balance-row" id="balanceRow" style="display:none;">
         <span class="bal-label">🪙 Your Token Balance</span>
@@ -421,8 +195,24 @@ body::before {
       <div class="total-row"><span>Subtotal</span><span id="subtotalVal">₹ 0</span></div>
       <div class="grand-row"><span>Total (tokens)</span><span id="grandTotal">🪙 0</span></div>
       <div class="insufficient" id="insufficientMsg">⚠️ Not enough tokens. Top up in your wallet.</div>
+      <div class="no-slot-msg" id="noSlotMsg" style="display:none;">⚠️ Please select a pickup time slot.</div>
       <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">Proceed to Pay with Tokens</button>
     </div>
+  </div>
+</div>
+
+<!-- ═══════ ORDER CONFIRMATION POPUP ═══════ -->
+<div class="overlay-popup" id="confirmPopup">
+  <div class="confirm-box">
+    <div class="confirm-icon">🎉</div>
+    <h2 class="confirm-title">Order Placed!</h2>
+    <p class="confirm-sub">Show this ID at the counter when you arrive</p>
+    <div class="confirm-order-id" id="confirmOrderId">—</div>
+    <div class="confirm-slot" id="confirmSlot"></div>
+    <div class="confirm-items" id="confirmItems"></div>
+    <div class="confirm-total" id="confirmTotal"></div>
+    <button class="confirm-track-btn" onclick="closeConfirm(); openWallet();">📋 Track Order Status</button>
+    <button class="confirm-close-btn" onclick="closeConfirm()">Done</button>
   </div>
 </div>
 
@@ -433,13 +223,11 @@ body::before {
       <h2>My Wallet</h2>
       <button class="popup-close" onclick="closeWallet()">✕</button>
     </div>
-
     <div class="wallet-card">
       <div class="wallet-name" id="walletUserName">Student</div>
       <div class="wallet-balance" id="walletBalance">0</div>
       <div class="wallet-sub">tokens available · 1 token = ₹1</div>
     </div>
-
     <div class="redeem-section">
       <h3>🎟️ Redeem Voucher Code</h3>
       <div class="redeem-row">
@@ -448,12 +236,10 @@ body::before {
       </div>
       <div class="msg" id="redeemMsg"></div>
     </div>
-
     <div class="history-section">
-      <h3>📋 Order History</h3>
+      <h3>📋 My Orders</h3>
       <div id="orderHistoryList"><div class="empty-cart-msg" style="padding:20px 0;">Loading orders…</div></div>
     </div>
-
     <button class="logout-link" onclick="logoutUser()">Logout</button>
   </div>
 </div>
@@ -461,7 +247,7 @@ body::before {
 <!-- ═══════ CONTACT POPUP ═══════ -->
 <div class="overlay-popup" id="contactPopup">
   <div class="contact-popup-box">
-    <h2>Contact Us <button class="popup-close-x" onclick="closeContact()">✕</button></h2>
+    <h2 class="contact-popup-head">Contact Us <button class="popup-close-x" onclick="closeContact()">✕</button></h2>
     <form action="https://formsubmit.co/kushwahaaadi007@gmail.com" method="POST">
       <div class="form-group"><label>Your Name</label><input type="text" name="name" required placeholder="e.g. Aaditya Kushwaha"></div>
       <div class="form-group"><label>Email Address</label><input type="email" name="email" required placeholder="your@email.com"></div>
@@ -498,6 +284,27 @@ const foodCourts = {
     {name:'Double Maggi',price:45,veg:true},{name:'Butter Maggi',price:50,veg:true},{name:'Oregano Maggi',price:50,veg:true},{name:'Corn Maggi',price:50,veg:true},{name:'Onion Capsicum Maggi',price:55,veg:true},{name:'Peri Peri Maggi',price:55,veg:true},{name:'Fusion Maggi',price:55,veg:true},{name:'Butter Double Masala Maggi',price:60,veg:true},{name:'Cheese Maggi',price:60,veg:true},{name:'Schezwan Maggi',price:60,veg:true},{name:'Chilli Garlic Maggi',price:60,veg:true},{name:'Tomato Pazzta',price:60,veg:true},{name:'Cheese Macaroni',price:60,veg:true},{name:'Corn and Cheese Maggi',price:70,veg:true},{name:'Chilli Garlic Cheese Maggi',price:70,veg:true},{name:'Espresso',price:20,veg:true},{name:'Cardamom Tea',price:20,veg:true},{name:'Hot Milk',price:20,veg:true},{name:'Masala Tea',price:20,veg:true},{name:'Cappuccino',price:30,veg:true},{name:'Café Latte',price:30,veg:true},{name:'Ginger & Honey Tea',price:30,veg:true},{name:'Café Mocha',price:35,veg:true},{name:'Hot Chocolate',price:35,veg:true},{name:'Irish Cappuccino',price:40,veg:true},{name:'Caramel Cappuccino',price:40,veg:true},{name:'Hazelnut Cappuccino',price:40,veg:true},{name:'Lemon Ice Tea (Regular)',price:40,veg:true},{name:'Frappe (Regular)',price:55,veg:true},{name:'Irish Frappe',price:75,veg:true},{name:'Caramel Frappe',price:75,veg:true},{name:'Chocolate Frappe',price:75,veg:true},{name:'Hazelnut Frappe',price:75,veg:true},{name:'Kit Kat Frappe',price:75,veg:true}
   ]}
 };
+
+// ── TIME SLOT GENERATOR (8am–10pm in 15-min blocks) ──
+function generateTimeSlots() {
+  const slots = [];
+  for (let h = 8; h < 22; h++) {
+    for (let m = 0; m < 60; m += 15) {
+      const start = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+      const endM = m + 15;
+      const endH = endM >= 60 ? h + 1 : h;
+      const end = `${endH.toString().padStart(2,'0')}:${(endM % 60).toString().padStart(2,'0')}`;
+      const label = `${fmt12(h,m)} – ${fmt12(endH, endM%60)}`;
+      slots.push({ value: start, label });
+    }
+  }
+  return slots;
+}
+function fmt12(h, m) {
+  const ampm = h < 12 ? 'AM' : 'PM';
+  const hh = h % 12 || 12;
+  return `${hh}:${m.toString().padStart(2,'0')} ${ampm}`;
+}
 </script>
 
 <!-- ═══════ FIREBASE + APP LOGIC ═══════ -->
@@ -506,11 +313,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, query, where, orderBy, getDocs, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── PASTE YOUR FIREBASE CONFIG HERE ──
-
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCaXRtutZ8oJbJIME8mfUf3lFyIcyq5vzo",
   authDomain: "yummylicious-b58c8.firebaseapp.com",
@@ -520,7 +322,6 @@ const firebaseConfig = {
   appId: "1:18438308478:web:245ac251940787ee888e2f",
   measurementId: "G-EVGNQ9T4LT"
 };
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -539,24 +340,19 @@ onAuthStateChanged(auth, async user => {
       userTokens = data.tokens ?? 0;
       const name = data.name || user.email;
       const initials = name.charAt(0).toUpperCase();
-
-      // Show logged-in state
       document.getElementById('loginNavBtn').style.display = 'none';
-      document.querySelectorAll('.token-pill').forEach(el => { el.style.display = 'flex'; el.classList.add('visible'); });
+      document.querySelectorAll('.token-pill').forEach(el => { el.style.display = 'flex'; });
       document.getElementById('tokenPill2').style.display = 'flex';
       document.getElementById('userMenuBtn').style.display = 'flex';
-      document.getElementById('userMenuBtn').classList.add('visible');
       document.getElementById('userAvatar').textContent = initials;
       document.getElementById('userName').textContent = name.split(' ')[0];
       updateTokenDisplays();
-
-      // Show balance in cart
       document.getElementById('balanceRow').style.display = 'flex';
     }
   } else {
     currentUser = null;
     userTokens = 0;
-    document.getElementById('loginNavBtn').style.display = 'block';
+    document.getElementById('loginNavBtn').style.display = '';
     document.querySelectorAll('.token-pill').forEach(el => { el.style.display = 'none'; });
     document.getElementById('tokenPill2').style.display = 'none';
     document.getElementById('userMenuBtn').style.display = 'none';
@@ -575,12 +371,19 @@ function updateTokenDisplays() {
 let cart = [];
 let currentFilter = 'all';
 let currentCourt = null;
+let selectedSlot = null;
 const PLACEHOLDER = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=70';
+
+// ── MOBILE MENU ──
+window.toggleMobileMenu = function() {
+  document.getElementById('mobileNav').classList.toggle('open');
+};
 
 // ── NAVIGATION ──
 window.showOrderPage = function(courtName) {
   currentCourt = courtName;
   currentFilter = 'all';
+  selectedSlot = null;
   document.getElementById('mainPage').style.display = 'none';
   document.getElementById('orderPage').style.display = 'block';
   document.getElementById('orderTitle').textContent = courtName;
@@ -602,13 +405,13 @@ window.showMainPage = function() {
 window.filterDishes = function() { renderDishes(); };
 
 function renderDishes() {
-  const query = document.getElementById('searchInput').value.toLowerCase();
+  const q = document.getElementById('searchInput').value.toLowerCase();
   const dishes = foodCourts[currentCourt].dishes;
   const container = document.getElementById('dishesContainer');
   container.innerHTML = '';
 
   const filtered = dishes.filter(d => {
-    const match = d.name.toLowerCase().includes(query);
+    const match = d.name.toLowerCase().includes(q);
     if (currentFilter === 'veg') return match && d.veg === true;
     if (currentFilter === 'nonveg') return match && d.veg === false;
     return match;
@@ -630,7 +433,7 @@ function renderDishes() {
       <div class="dish-body">
         <div class="dish-type-dot" style="background:${dotColor};border-color:${dotColor};"></div>
         <div class="dish-name">${dish.name}</div>
-        <div class="dish-price">₹ ${dish.price} <span style="font-size:11px;color:var(--muted);font-weight:400;">· 🪙 ${dish.price} tokens</span></div>
+        <div class="dish-price">₹ ${dish.price} <span style="font-size:11px;color:var(--muted);font-weight:400;">· 🪙 ${dish.price}</span></div>
         <div class="qty-row">
           <button class="qty-btn minus">−</button>
           <span class="qty-num">1</span>
@@ -638,29 +441,22 @@ function renderDishes() {
         </div>
         <button class="add-btn">Add to Cart</button>
       </div>`;
-
     const minus = card.querySelector('.minus');
     const plus = card.querySelector('.plus');
     const qtyEl = card.querySelector('.qty-num');
     const addBtn = card.querySelector('.add-btn');
-
     minus.addEventListener('click', () => { const q = parseInt(qtyEl.textContent); if (q > 1) qtyEl.textContent = q - 1; });
     plus.addEventListener('click', () => { qtyEl.textContent = parseInt(qtyEl.textContent) + 1; });
     addBtn.addEventListener('click', () => {
       addToCart(dish.name, dish.price, parseInt(qtyEl.textContent));
-      addBtn.textContent = 'Added! ✓'; addBtn.classList.add('added');
+      addBtn.textContent = '✓ Added!'; addBtn.classList.add('added');
       setTimeout(() => { addBtn.textContent = 'Add to Cart'; addBtn.classList.remove('added'); qtyEl.textContent = 1; }, 1200);
     });
     container.appendChild(card);
   });
 }
 
-window.setFilter = function(f) {
-  currentFilter = f;
-  setFilterUI(f);
-  renderDishes();
-};
-
+window.setFilter = function(f) { currentFilter = f; setFilterUI(f); renderDishes(); };
 function setFilterUI(f) {
   document.getElementById('filterAll').className = 'filter-btn' + (f === 'all' ? ' active-all' : '');
   document.getElementById('filterVeg').className = 'filter-btn' + (f === 'veg' ? ' active-veg' : '');
@@ -670,9 +466,9 @@ function setFilterUI(f) {
 // ── CART ──
 function addToCart(name, price, qty) {
   const existing = cart.find(i => i.name === name);
-  if (existing) existing.qty += qty; else cart.push({ name, price, qty });
+  if (existing) existing.qty += qty; else cart.push({ name, price, qty, court: currentCourt });
   syncCartCounts();
-  showToast(`${name} added!`);
+  showToast(`${name} added! 🛒`);
 }
 
 function syncCartCounts() {
@@ -681,7 +477,34 @@ function syncCartCounts() {
   document.getElementById('cart-count-2').textContent = total;
 }
 
-window.openCart = function() { renderCart(); document.getElementById('cartPopup').classList.add('open'); };
+// ── TIME SLOTS ──
+function renderTimeSlots() {
+  const grid = document.getElementById('timeslotGrid');
+  const slots = generateTimeSlots();
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  grid.innerHTML = '';
+  slots.forEach(slot => {
+    const [sh, sm] = slot.value.split(':').map(Number);
+    const slotMins = sh * 60 + sm;
+    const isPast = slotMins <= nowMins;
+    const btn = document.createElement('button');
+    btn.className = 'slot-btn' + (isPast ? ' slot-past' : '') + (selectedSlot === slot.value ? ' slot-active' : '');
+    btn.textContent = slot.label;
+    btn.disabled = isPast;
+    btn.onclick = () => {
+      selectedSlot = slot.value;
+      document.getElementById('noSlotMsg').style.display = 'none';
+      renderTimeSlots();
+    };
+    grid.appendChild(btn);
+  });
+  // Scroll to current time
+  const firstActive = grid.querySelector('.slot-btn:not(.slot-past)');
+  if (firstActive) firstActive.scrollIntoView({ block: 'nearest', inline: 'start' });
+}
+
+window.openCart = function() { renderCart(); renderTimeSlots(); document.getElementById('cartPopup').classList.add('open'); };
 window.closeCart = function() { document.getElementById('cartPopup').classList.remove('open'); };
 
 function renderCart() {
@@ -693,30 +516,46 @@ function renderCart() {
     scroll.innerHTML = `<div class="empty-cart-msg"><div class="icon">🛒</div>Your cart is empty.<br><span style="font-size:13px;color:var(--muted)">Add something delicious!</span></div>`;
     document.getElementById('grandTotal').textContent = '🪙 0';
     document.getElementById('subtotalVal').textContent = '₹ 0';
+    document.getElementById('timeslotSection').style.display = 'none';
     document.getElementById('checkoutBtn').disabled = false;
     document.getElementById('insufficientMsg').style.display = 'none';
     return;
   }
 
-  cart.forEach((item, i) => {
-    const itemTotal = item.price * item.qty;
-    total += itemTotal;
-    const row = document.createElement('div');
-    row.className = 'cart-item-row';
-    row.innerHTML = `
-      <span class="cart-item-name">${item.name}</span>
-      <span class="cart-item-price">₹${item.price}</span>
-      <span class="cart-item-qty">×${item.qty}</span>
-      <span class="cart-item-total">₹${itemTotal}</span>
-      <span class="cart-item-remove" onclick="removeFromCart(${i})">✕</span>`;
-    scroll.appendChild(row);
+  document.getElementById('timeslotSection').style.display = 'block';
+
+  // Group by court
+  const byCourt = {};
+  cart.forEach(item => {
+    if (!byCourt[item.court]) byCourt[item.court] = [];
+    byCourt[item.court].push(item);
+  });
+
+  Object.entries(byCourt).forEach(([court, items]) => {
+    const courtLabel = document.createElement('div');
+    courtLabel.className = 'cart-court-label';
+    courtLabel.textContent = '📍 ' + court;
+    scroll.appendChild(courtLabel);
+    items.forEach((item, _) => {
+      const globalIdx = cart.indexOf(item);
+      const itemTotal = item.price * item.qty;
+      total += itemTotal;
+      const row = document.createElement('div');
+      row.className = 'cart-item-row';
+      row.innerHTML = `
+        <span class="cart-item-name">${item.name}</span>
+        <span class="cart-item-price">₹${item.price}</span>
+        <span class="cart-item-qty">×${item.qty}</span>
+        <span class="cart-item-total">₹${itemTotal}</span>
+        <span class="cart-item-remove" onclick="removeFromCart(${globalIdx})">✕</span>`;
+      scroll.appendChild(row);
+    });
   });
 
   document.getElementById('subtotalVal').textContent = '₹ ' + total;
   document.getElementById('grandTotal').textContent = '🪙 ' + total;
   document.getElementById('cartBalanceDisplay').textContent = userTokens + ' tokens';
 
-  // Check if user has enough tokens
   if (currentUser && userTokens < total) {
     document.getElementById('insufficientMsg').style.display = 'block';
     document.getElementById('checkoutBtn').disabled = true;
@@ -728,56 +567,94 @@ function renderCart() {
   }
 }
 
-window.removeFromCart = function(i) { cart.splice(i, 1); syncCartCounts(); renderCart(); };
+window.removeFromCart = function(i) { cart.splice(i, 1); syncCartCounts(); renderCart(); renderTimeSlots(); };
 
 // ── CHECKOUT ──
 window.checkout = async function() {
   if (!currentUser) { closeCart(); window.location.href = 'login.html'; return; }
   if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+  if (!selectedSlot) {
+    document.getElementById('noSlotMsg').style.display = 'block';
+    document.getElementById('timeslotSection').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
 
   const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
   if (userTokens < total) { showToast('Not enough tokens!'); return; }
 
+  const btn = document.getElementById('checkoutBtn');
+  btn.disabled = true; btn.textContent = 'Placing order…';
+
   try {
-    // Deduct tokens
     await updateDoc(doc(db, 'users', currentUser.uid), { tokens: increment(-total) });
-    // Save order
-    await addDoc(collection(db, 'orders'), {
+
+    // Get slot label
+    const slots = generateTimeSlots();
+    const slotObj = slots.find(s => s.value === selectedSlot);
+    const slotLabel = slotObj ? slotObj.label : selectedSlot;
+
+    // Group courts
+    const courts = [...new Set(cart.map(i => i.court))];
+
+    const orderRef = await addDoc(collection(db, 'orders'), {
       userId: currentUser.uid,
       userEmail: currentUser.email,
-      items: cart.map(i => ({ name: i.name, price: i.price, qty: i.qty })),
+      items: cart.map(i => ({ name: i.name, price: i.price, qty: i.qty, court: i.court })),
       total,
       tokensUsed: total,
-      foodCourt: currentCourt || 'Multiple',
+      foodCourt: courts.join(', '),
+      pickupSlot: selectedSlot,
+      pickupSlotLabel: slotLabel,
+      status: 'pending',
       createdAt: serverTimestamp()
     });
 
+    const shortId = orderRef.id.slice(-6).toUpperCase();
     userTokens -= total;
     updateTokenDisplays();
-    cart = [];
-    syncCartCounts();
+
+    // Show confirmation
     closeCart();
-    showToast(`🎉 Order placed! 🪙 ${total} tokens used.`);
+    showConfirmation(shortId, slotLabel, cart, total);
+
+    cart = [];
+    selectedSlot = null;
+    syncCartCounts();
   } catch(e) {
     showToast('Something went wrong. Please try again.');
+    btn.disabled = false; btn.textContent = 'Pay with Tokens';
   }
 };
+
+function showConfirmation(orderId, slot, items, total) {
+  document.getElementById('confirmOrderId').textContent = '#' + orderId;
+  document.getElementById('confirmSlot').innerHTML = `⏱️ Pickup slot: <strong>${slot}</strong>`;
+  document.getElementById('confirmItems').innerHTML = items.map(i => `<span>${i.name} ×${i.qty}</span>`).join('');
+  document.getElementById('confirmTotal').innerHTML = `🪙 ${total} tokens used`;
+  document.getElementById('confirmPopup').classList.add('open');
+}
+
+window.closeConfirm = function() { document.getElementById('confirmPopup').classList.remove('open'); };
 
 // ── WALLET ──
 window.openWallet = async function() {
   if (!currentUser) { window.location.href = 'login.html'; return; }
-  // Refresh token balance
   const snap = await getDoc(doc(db, 'users', currentUser.uid));
   if (snap.exists()) {
     userTokens = snap.data().tokens ?? 0;
     document.getElementById('walletUserName').textContent = snap.data().name || currentUser.email;
     updateTokenDisplays();
   }
-  // Load order history
   await loadOrderHistory();
   document.getElementById('walletPopup').classList.add('open');
 };
 window.closeWallet = function() { document.getElementById('walletPopup').classList.remove('open'); };
+
+const STATUS_CONFIG = {
+  pending:    { label: '🟡 Pending',   cls: 'status-pending' },
+  preparing:  { label: '🟠 Preparing', cls: 'status-preparing' },
+  ready:      { label: '✅ Ready!',     cls: 'status-ready' }
+};
 
 async function loadOrderHistory() {
   const list = document.getElementById('orderHistoryList');
@@ -787,20 +664,27 @@ async function loadOrderHistory() {
     const snap = await getDocs(q);
     const orders = [];
     snap.forEach(d => orders.push({ id: d.id, ...d.data() }));
-
     if (orders.length === 0) {
       list.innerHTML = '<div style="color:var(--muted);font-size:14px;padding:10px 0;">No orders yet. Start ordering!</div>';
       return;
     }
-    list.innerHTML = orders.map(o => `
+    list.innerHTML = orders.map(o => {
+      const sc = STATUS_CONFIG[o.status] || STATUS_CONFIG.pending;
+      return `
       <div class="order-history-item">
         <div class="oh-top">
           <span style="font-size:13px;color:var(--muted);">${o.foodCourt || '—'}</span>
-          <span class="oh-total">🪙 ${o.tokensUsed}</span>
+          <span class="order-status-badge ${sc.cls}">${sc.label}</span>
         </div>
-        <div class="oh-items">${(o.items || []).map(i => `${i.name} ×${i.qty}`).join(' · ')}</div>
-        <div class="oh-date">${o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleString('en-IN') : '—'}</div>
-      </div>`).join('');
+        <div class="oh-items">${(o.items||[]).map(i=>`${i.name} ×${i.qty}`).join(' · ')}</div>
+        ${o.pickupSlotLabel ? `<div class="oh-slot">⏱️ ${o.pickupSlotLabel}</div>` : ''}
+        <div class="oh-bottom">
+          <span class="oh-total">🪙 ${o.tokensUsed}</span>
+          <span class="oh-date">${o.createdAt ? new Date(o.createdAt.seconds*1000).toLocaleString('en-IN') : '—'}</span>
+        </div>
+        <div class="oh-id">Order #${o.id.slice(-6).toUpperCase()}</div>
+      </div>`;
+    }).join('');
   } catch(e) {
     list.innerHTML = '<div style="color:var(--muted);font-size:14px;">Could not load orders.</div>';
   }
@@ -811,23 +695,17 @@ window.redeemVoucher = async function() {
   if (!currentUser) { window.location.href = 'login.html'; return; }
   const code = document.getElementById('voucherInput').value.trim().toUpperCase();
   if (!code) { showVoucherMsg('Enter a voucher code.', 'error'); return; }
-
   try {
     const snap = await getDocs(collection(db, 'vouchers'));
     let voucherDoc = null;
     snap.forEach(d => { if (d.data().code === code && !d.data().usedBy) voucherDoc = { id: d.id, ...d.data() }; });
-
     if (!voucherDoc) { showVoucherMsg('Invalid or already used code.', 'error'); return; }
-
-    // Mark used and add tokens
-    const { getFirestore: gf, doc: docRef, updateDoc: upd } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     await updateDoc(doc(db, 'vouchers', voucherDoc.id), { usedBy: currentUser.uid, usedByEmail: currentUser.email });
     await updateDoc(doc(db, 'users', currentUser.uid), { tokens: increment(voucherDoc.value) });
-
     userTokens += voucherDoc.value;
     updateTokenDisplays();
     document.getElementById('voucherInput').value = '';
-    showVoucherMsg(`🎉 Redeemed! +${voucherDoc.value} tokens added to your wallet.`, 'success');
+    showVoucherMsg(`🎉 Redeemed! +${voucherDoc.value} tokens added.`, 'success');
   } catch(e) {
     showVoucherMsg('Something went wrong. Try again.', 'error');
   }
@@ -848,12 +726,17 @@ window.logoutUser = async function() {
 };
 
 // ── CONTACT ──
-document.getElementById('contact-link').addEventListener('click', e => { e.preventDefault(); document.getElementById('contactPopup').classList.add('open'); });
+const openContact = () => document.getElementById('contactPopup').classList.add('open');
 window.closeContact = function() { document.getElementById('contactPopup').classList.remove('open'); };
+document.getElementById('contact-link').addEventListener('click', e => { e.preventDefault(); openContact(); });
+document.getElementById('footer-contact-link').addEventListener('click', e => { e.preventDefault(); openContact(); });
+const mobileContact = document.getElementById('mobile-contact-link');
+if (mobileContact) mobileContact.addEventListener('click', e => { e.preventDefault(); openContact(); });
 
 // Close on outside click
-['cartPopup', 'walletPopup', 'contactPopup'].forEach(id => {
-  document.getElementById(id).addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
+['cartPopup','walletPopup','contactPopup','confirmPopup'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
 });
 
 // ── TOAST ──

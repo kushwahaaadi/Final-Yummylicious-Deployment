@@ -5,117 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel | Yummylicious</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --orange: #FF6B00;
-  --orange-light: #FF9240;
-  --orange-glow: rgba(255,107,0,0.18);
-  --dark: #0D0D0D;
-  --card-bg: rgba(18,18,18,0.95);
-  --surface: rgba(255,255,255,0.04);
-  --text: #F5F0EB;
-  --muted: #A09890;
-  --error: #ef4444;
-  --success: #22c55e;
-  --radius: 14px;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: #0D0D0D;
-  color: var(--text);
-  min-height: 100vh;
-}
-body::before {
-  content: '';
-  position: fixed;
-  top: -20%; right: -10%;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,107,0,0.10) 0%, transparent 70%);
-  pointer-events: none; z-index: 0;
-}
+/* Admin-specific styles */
+body { background: #0D0D0D; }
 
-/* NAVBAR */
-.navbar {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 5%; height: 70px;
-  background: rgba(13,13,13,0.9);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,107,0,0.15);
+/* LOGIN GATE */
+#loginGate {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 20px;
 }
-.logo { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--orange); letter-spacing: 2px; }
+.login-card {
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px; padding: 40px; width: 100%; max-width: 420px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6); position: relative; z-index: 1;
+  backdrop-filter: blur(20px);
+}
+.login-card h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.login-card .login-sub { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+
+/* Role selector */
+.role-tabs {
+  display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.role-tab {
+  flex: 1; min-width: 120px; padding: 10px 14px; border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
+  color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.role-tab.active { border-color: var(--orange); color: var(--orange); background: var(--orange-glow); }
+
+.lc-input {
+  width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px;
+  padding: 13px 16px; border-radius: 10px; outline: none;
+  transition: border-color 0.2s; margin-bottom: 12px;
+}
+.lc-input:focus { border-color: var(--orange); }
+.lc-submit {
+  width: 100%; padding: 14px; background: var(--orange); border: none; color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700;
+  border-radius: 12px; cursor: pointer; transition: all 0.2s;
+}
+.lc-submit:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+/* NAVBAR badges */
 .admin-badge {
   background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
   color: #ef4444; font-size: 11px; font-weight: 700; letter-spacing: 2px;
   padding: 5px 12px; border-radius: 999px; text-transform: uppercase;
 }
+.court-badge {
+  background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.3);
+  color: var(--orange-light); font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  padding: 5px 12px; border-radius: 999px;
+}
 .logout-btn {
-  background: none; border: 1px solid rgba(255,255,255,0.1);
-  color: var(--muted); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 600; padding: 8px 16px;
-  border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s;
 }
 .logout-btn:hover { border-color: var(--orange); color: var(--orange); }
 
-/* LOGIN GATE */
-#loginGate {
-  display: flex; align-items: center; justify-content: center;
-  min-height: calc(100vh - 70px); padding: 20px;
-}
-.login-card {
-  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 20px; padding: 40px; width: 100%; max-width: 400px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-}
-.login-card h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-.login-card p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+/* ADMIN CONTENT */
+#adminContent, #courtContent { display: none; padding: 36px 5% 60px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
 
-/* MAIN CONTENT */
-#adminContent { display: none; padding: 40px 5%; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.page-title { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 800; margin-bottom: 6px; }
+.page-sub { color: var(--muted); font-size: 14px; margin-bottom: 36px; }
 
-.page-title { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 8px; }
-.page-sub { color: var(--muted); font-size: 15px; margin-bottom: 40px; }
-
-/* STAT CARDS */
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+/* STATS */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
 .stat-card {
   background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius); padding: 24px;
+  border-radius: 14px; padding: 22px;
 }
-.stat-card .num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--orange); }
-.stat-card .lbl { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.stat-card .num { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; color: var(--orange); }
+.stat-card .lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
 /* SECTIONS */
-.section { margin-bottom: 40px; }
+.section { margin-bottom: 36px; }
 .section-title {
-  font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700;
-  margin-bottom: 20px; padding-bottom: 12px;
+  font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700;
+  margin-bottom: 18px; padding-bottom: 12px;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   display: flex; align-items: center; gap: 10px;
 }
-
 .panel {
   background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius); padding: 28px;
+  border-radius: 14px; padding: 24px;
 }
 
 /* FORM ELEMENTS */
 .form-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end; }
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-group label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-.form-group input, .form-group select {
-  background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
+.fg { display: flex; flex-direction: column; gap: 8px; }
+.fg label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.fg input, .fg select {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
   color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 14px; padding: 11px 14px; border-radius: 10px; outline: none;
-  transition: border-color 0.2s;
+  font-size: 14px; padding: 11px 14px; border-radius: 10px; outline: none; transition: border-color 0.2s;
 }
-.form-group input:focus, .form-group select:focus { border-color: var(--orange); }
-.form-group input::placeholder { color: rgba(160,152,144,0.5); }
-.form-group select option { background: #1a1a1a; }
+.fg input:focus, .fg select:focus { border-color: var(--orange); }
+.fg input::placeholder { color: rgba(160,152,144,0.5); }
+.fg select option { background: #1a1a1a; }
 
+/* Search bar inside admin */
+.admin-search {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px;
+  padding: 10px 14px; border-radius: 10px; outline: none; width: 100%; max-width: 280px;
+  transition: border-color 0.2s; margin-bottom: 16px;
+}
+.admin-search:focus { border-color: var(--orange); }
+
+/* BUTTONS */
 .btn {
-  padding: 11px 24px; border-radius: 10px; border: none;
+  padding: 11px 22px; border-radius: 10px; border: none;
   font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
   cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
@@ -125,9 +130,10 @@ body::before {
 .btn-green:hover { background: rgba(34,197,94,0.25); }
 .btn-red { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; }
 .btn-red:hover { background: rgba(239,68,68,0.25); }
+.btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* USERS TABLE */
+/* TABLES */
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; }
 th {
@@ -135,93 +141,122 @@ th {
   font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
   color: var(--orange); border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-td { padding: 14px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+td { padding: 13px 14px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,0.02); }
+tr:hover td { background: rgba(255,255,255,0.015); }
 
 .token-badge {
   background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.25);
-  color: var(--orange-light); font-weight: 700; font-size: 13px;
-  padding: 4px 10px; border-radius: 8px; display: inline-block;
+  color: var(--orange-light); font-weight: 700; font-size: 12px;
+  padding: 3px 10px; border-radius: 8px; display: inline-block;
 }
-
-.quick-add {
-  display: flex; gap: 6px; align-items: center;
-}
+.quick-add { display: flex; gap: 6px; align-items: center; }
 .quick-add input {
-  width: 70px; background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
+  width: 70px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
   color: var(--text); font-family: 'DM Sans', sans-serif;
   font-size: 13px; padding: 6px 10px; border-radius: 8px; outline: none;
 }
 .quick-add input:focus { border-color: var(--orange); }
 
 /* VOUCHERS */
-.voucher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+.voucher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 16px; }
 .voucher-card {
-  background: var(--surface); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px; padding: 16px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 14px;
 }
-.voucher-code { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--orange); margin-bottom: 4px; letter-spacing: 2px; }
+.voucher-code { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--orange); margin-bottom: 4px; letter-spacing: 2px; }
 .voucher-meta { font-size: 12px; color: var(--muted); }
-.voucher-used { opacity: 0.4; }
-.voucher-used .voucher-code { color: var(--muted); text-decoration: line-through; }
 
-/* MSG */
-.msg {
-  padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; margin-top: 12px; display: none;
+/* ORDER STATUS CONTROLS */
+.status-select {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 12px;
+  padding: 5px 10px; border-radius: 8px; outline: none; cursor: pointer;
+  transition: border-color 0.2s;
 }
-.msg.error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: var(--error); display: block; }
-.msg.success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: var(--success); display: block; }
+.status-select:focus { border-color: var(--orange); }
+.status-select option { background: #1a1a1a; }
+
+/* Status badges (inline) */
+.sb {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+}
+.sb-pending  { background: rgba(250,204,21,0.15); color: #facc15; border: 1px solid rgba(250,204,21,0.3); }
+.sb-preparing{ background: rgba(251,146,60,0.15); color: #fb923c; border: 1px solid rgba(251,146,60,0.3); }
+.sb-ready    { background: rgba(34,197,94,0.15);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
 
 .empty-state { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
 
-/* INPUT in login */
-.lc-input {
-  width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px;
-  padding: 13px 16px; border-radius: 10px; outline: none; transition: border-color 0.2s; margin-bottom: 12px;
+/* Court dashboard tabs */
+.court-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+.court-tab {
+  padding: 10px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03); color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
 }
-.lc-input:focus { border-color: var(--orange); }
-.lc-submit {
-  width: 100%; padding: 14px; background: var(--orange); border: none; color: white;
-  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700;
-  border-radius: 12px; cursor: pointer; transition: all 0.2s;
+.court-tab.active { border-color: var(--orange); color: var(--orange); background: var(--orange-glow); }
+
+/* Revenue card */
+.revenue-card {
+  background: linear-gradient(135deg, rgba(255,107,0,0.12), rgba(255,107,0,0.04));
+  border: 1px solid rgba(255,107,0,0.2); border-radius: 14px; padding: 24px;
 }
-.lc-submit:hover { background: var(--orange-light); }
+.revenue-card .rev-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.revenue-card .rev-num { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 800; color: var(--orange); line-height: 1; }
+.revenue-card .rev-sub { font-size: 13px; color: rgba(255,107,0,0.6); margin-top: 4px; }
 
 @media (max-width: 700px) {
   .stats-row { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
+  #adminContent, #courtContent { padding: 20px 5% 40px; }
 }
 </style>
 </head>
 <body>
 
-<nav class="navbar">
+<nav class="navbar" id="mainNav">
   <div class="logo">YUMMYLICIOUS</div>
-  <div class="admin-badge">Admin Panel</div>
-  <button class="logout-btn" onclick="adminLogout()">Logout</button>
+  <div id="navBadge"></div>
+  <button class="logout-btn" onclick="handleLogout()" id="logoutBtn" style="display:none;">Logout</button>
 </nav>
 
-<!-- ADMIN LOGIN GATE -->
+<!-- ══════ LOGIN GATE ══════ -->
 <div id="loginGate">
   <div class="login-card">
-    <h2>Admin Access 🔐</h2>
-    <p>This panel is only for Yummylicious administrators.</p>
-    <input type="email" class="lc-input" id="adminEmail" placeholder="Admin email">
-    <input type="password" class="lc-input" id="adminPassword" placeholder="Password">
-    <button class="lc-submit" onclick="adminLogin()">Login as Admin</button>
-    <div class="msg" id="adminLoginMsg"></div>
+    <h2>Panel Access 🔐</h2>
+    <p class="login-sub">Select your role to continue</p>
+
+    <div class="role-tabs">
+      <button class="role-tab active" id="roleAdmin" onclick="selectRole('admin')">🛡️ Admin</button>
+      <button class="role-tab" id="roleSS" onclick="selectRole('Southern Stories')">🍛 S. Stories</button>
+      <button class="role-tab" id="roleSE" onclick="selectRole('SnapEats')">🍔 SnapEats</button>
+      <button class="role-tab" id="roleHC" onclick="selectRole('House of Chow')">🥢 H. of Chow</button>
+      <button class="role-tab" id="roleBistro" onclick="selectRole('Bistro')">☕ Bistro</button>
+      <button class="role-tab" id="roleQuench" onclick="selectRole('Quench')">🧃 Quench</button>
+      <button class="role-tab" id="roleMH" onclick="selectRole('Maggie Hotspot')">🍜 M. Hotspot</button>
+    </div>
+
+    <input type="email" class="lc-input" id="loginEmail" placeholder="Email address">
+    <input type="password" class="lc-input" id="loginPassword" placeholder="Password">
+    <button class="lc-submit" onclick="doLogin()">Login</button>
+    <div class="msg" id="loginMsg"></div>
   </div>
 </div>
 
-<!-- ADMIN CONTENT -->
+<!-- ══════ ADMIN CONTENT ══════ -->
 <div id="adminContent">
   <div class="page-title">Admin Dashboard</div>
-  <div class="page-sub">Manage student tokens, generate voucher codes, and view orders.</div>
+  <div class="page-sub">Manage students, tokens, vouchers and monitor all orders.</div>
 
   <!-- STATS -->
   <div class="stats-row">
+    <div class="stat-card revenue-card">
+      <div class="rev-label">Total Revenue</div>
+      <div class="rev-num" id="statRevenue">—</div>
+      <div class="rev-sub">tokens spent</div>
+    </div>
     <div class="stat-card">
       <div class="num" id="statUsers">—</div>
       <div class="lbl">Registered Students</div>
@@ -236,16 +271,16 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     </div>
   </div>
 
-  <!-- ADD TOKENS TO USER -->
+  <!-- ADD TOKENS -->
   <div class="section">
     <div class="section-title">💰 Add Tokens to Student</div>
     <div class="panel">
       <div class="form-row">
-        <div class="form-group">
+        <div class="fg">
           <label>Student Email</label>
           <input type="email" id="targetEmail" placeholder="student@bennett.edu.in">
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>Tokens to Add</label>
           <input type="number" id="tokenAmount" placeholder="e.g. 200" min="1">
         </div>
@@ -260,11 +295,11 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     <div class="section-title">🎟️ Generate Voucher Codes</div>
     <div class="panel">
       <div class="form-row">
-        <div class="form-group">
+        <div class="fg">
           <label>Token Value</label>
           <input type="number" id="voucherValue" placeholder="e.g. 100" min="1">
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>How Many Codes</label>
           <input type="number" id="voucherCount" placeholder="e.g. 10" min="1" max="50">
         </div>
@@ -281,12 +316,8 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     <div class="panel">
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr><th>Code</th><th>Value</th><th>Status</th><th>Used By</th><th>Action</th></tr>
-          </thead>
-          <tbody id="voucherTableBody">
-            <tr><td colspan="5" class="empty-state">Loading…</td></tr>
-          </tbody>
+          <thead><tr><th>Code</th><th>Value</th><th>Status</th><th>Used By</th><th>Action</th></tr></thead>
+          <tbody id="voucherTableBody"><tr><td colspan="5" class="empty-state">Loading…</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -296,14 +327,11 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   <div class="section">
     <div class="section-title">👥 All Students</div>
     <div class="panel">
+      <input type="text" class="admin-search" placeholder="Search by name or email…" oninput="filterUsers(this.value)">
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr><th>Name</th><th>Email</th><th>Tokens</th><th>Quick Add</th></tr>
-          </thead>
-          <tbody id="usersTableBody">
-            <tr><td colspan="4" class="empty-state">Loading…</td></tr>
-          </tbody>
+          <thead><tr><th>Name</th><th>Email</th><th>Tokens</th><th>Quick Add</th></tr></thead>
+          <tbody id="usersTableBody"><tr><td colspan="4" class="empty-state">Loading…</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -311,32 +339,51 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 
   <!-- ALL ORDERS -->
   <div class="section">
-    <div class="section-title">🧾 Recent Orders</div>
+    <div class="section-title">🧾 All Orders <span style="font-size:13px;color:var(--muted);font-weight:400;">(last 50)</span></div>
     <div class="panel">
+      <input type="text" class="admin-search" placeholder="Search by email…" oninput="filterOrders(this.value)">
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr><th>Student</th><th>Items</th><th>Total</th><th>Tokens Used</th><th>Time</th></tr>
-          </thead>
-          <tbody id="ordersTableBody">
-            <tr><td colspan="5" class="empty-state">Loading…</td></tr>
-          </tbody>
+          <thead><tr><th>Student</th><th>Court</th><th>Items</th><th>Tokens</th><th>Slot</th><th>Status</th><th>Time</th></tr></thead>
+          <tbody id="ordersTableBody"><tr><td colspan="7" class="empty-state">Loading…</td></tr></tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ══════ FOOD COURT CONTENT ══════ -->
+<div id="courtContent">
+  <div class="page-title" id="courtPageTitle">Food Court Dashboard</div>
+  <div class="page-sub" id="courtPageSub">Manage incoming orders and update their status.</div>
+
+  <div class="court-tabs">
+    <button class="court-tab active" id="tabPending" onclick="setCourtTab('pending')">🟡 Pending</button>
+    <button class="court-tab" id="tabPreparing" onclick="setCourtTab('preparing')">🟠 Preparing</button>
+    <button class="court-tab" id="tabReady" onclick="setCourtTab('ready')">✅ Ready</button>
+    <button class="court-tab" id="tabAll" onclick="setCourtTab('all')">📋 All</button>
+  </div>
+
+  <div class="section">
+    <div class="panel">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Student</th><th>Items</th><th>Tokens</th><th>Slot</th><th>Status</th><th>Update</th></tr></thead>
+          <tbody id="courtOrdersBody"><tr><td colspan="7" class="empty-state">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, doc, getDoc, getDocs, updateDoc, addDoc, deleteDoc, query, orderBy, limit, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, doc, getDoc, getDocs, updateDoc, addDoc, deleteDoc, query, orderBy, where, limit, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── PASTE YOUR FIREBASE CONFIG HERE ──
-
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCaXRtutZ8oJbJIME8mfUf3lFyIcyq5vzo",
   authDomain: "yummylicious-b58c8.firebaseapp.com",
@@ -347,56 +394,94 @@ const firebaseConfig = {
   measurementId: "G-EVGNQ9T4LT"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ── AUTH GATE ──
+let selectedRole = 'admin';
+let allUsers = [];
+let allOrdersData = [];
+let currentCourtFilter = 'pending';
+let loggedInCourtName = '';
+
+// ── ROLE SELECTOR ──
+window.selectRole = function(role) {
+  selectedRole = role;
+  document.querySelectorAll('.role-tab').forEach(b => b.classList.remove('active'));
+  const map = { admin:'roleAdmin','Southern Stories':'roleSS','SnapEats':'roleSE','House of Chow':'roleHC','Bistro':'roleBistro','Quench':'roleQuench','Maggie Hotspot':'roleMH' };
+  if (map[role]) document.getElementById(map[role]).classList.add('active');
+};
+
+// ── AUTH STATE ──
 onAuthStateChanged(auth, async user => {
   if (!user) return;
   const snap = await getDoc(doc(db, 'users', user.uid));
-  if (snap.exists() && snap.data().role === 'admin') {
-    document.getElementById('loginGate').style.display = 'none';
-    document.getElementById('adminContent').style.display = 'block';
-    loadAll();
+  if (!snap.exists()) { await signOut(auth); return; }
+  const data = snap.data();
+
+  if (data.role === 'admin') {
+    showAdminPanel();
+  } else if (data.role && data.role.startsWith('court_')) {
+    const courtName = data.role.replace('court_', '').replace(/_/g,' ');
+    loggedInCourtName = courtName;
+    showCourtPanel(courtName);
   } else {
     await signOut(auth);
-    showMsg('adminLoginMsg', 'You do not have admin access.', 'error');
+    showMsg('loginMsg', 'You do not have panel access.', 'error');
   }
 });
 
-window.adminLogin = async function() {
-  const email = document.getElementById('adminEmail').value.trim();
-  const pw = document.getElementById('adminPassword').value;
-  if (!email || !pw) { showMsg('adminLoginMsg', 'Fill in both fields.', 'error'); return; }
+function showAdminPanel() {
+  document.getElementById('loginGate').style.display = 'none';
+  document.getElementById('adminContent').style.display = 'block';
+  document.getElementById('logoutBtn').style.display = 'block';
+  document.getElementById('navBadge').innerHTML = '<span class="admin-badge">Admin Panel</span>';
+  loadAll();
+}
+
+function showCourtPanel(courtName) {
+  document.getElementById('loginGate').style.display = 'none';
+  document.getElementById('courtContent').style.display = 'block';
+  document.getElementById('logoutBtn').style.display = 'block';
+  document.getElementById('navBadge').innerHTML = `<span class="court-badge">📍 ${courtName}</span>`;
+  document.getElementById('courtPageTitle').textContent = courtName + ' — Orders';
+  document.getElementById('courtPageSub').textContent = 'Update order statuses as you prepare them.';
+  loadCourtOrders();
+}
+
+// ── LOGIN ──
+window.doLogin = async function() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPassword').value;
+  if (!email || !pw) { showMsg('loginMsg', 'Fill in both fields.', 'error'); return; }
   try {
     await signInWithEmailAndPassword(auth, email, pw);
   } catch(e) {
-    showMsg('adminLoginMsg', 'Invalid credentials.', 'error');
+    showMsg('loginMsg', 'Invalid credentials.', 'error');
   }
 };
 
-window.adminLogout = async function() {
+window.handleLogout = async function() {
   await signOut(auth);
   location.reload();
 };
 
-// ── LOAD ALL DATA ──
+// ── ADMIN: LOAD ALL ──
 async function loadAll() {
   await Promise.all([loadUsers(), loadVouchers(), loadOrders()]);
 }
 
 async function loadUsers() {
   const snap = await getDocs(collection(db, 'users'));
-  const users = [];
-  snap.forEach(d => { if (d.data().role !== 'admin') users.push({ id: d.id, ...d.data() }); });
+  allUsers = [];
+  snap.forEach(d => { if (d.data().role === 'student' || !d.data().role) allUsers.push({ id: d.id, ...d.data() }); });
+  document.getElementById('statUsers').textContent = allUsers.length;
+  renderUsersTable(allUsers);
+}
 
-  document.getElementById('statUsers').textContent = users.length;
-
+function renderUsersTable(users) {
   const tbody = document.getElementById('usersTableBody');
-  if (users.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No students yet.</td></tr>'; return; }
-
+  if (users.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No students found.</td></tr>'; return; }
   tbody.innerHTML = users.map(u => `
     <tr>
       <td>${u.name || '—'}</td>
@@ -404,67 +489,79 @@ async function loadUsers() {
       <td><span class="token-badge">🪙 ${u.tokens ?? 0}</span></td>
       <td>
         <div class="quick-add">
-          <input type="number" id="quick_${u.id}" placeholder="50" min="1">
-          <button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="quickAdd('${u.id}','${u.email}')">+Add</button>
+          <input type="number" id="quick_${u.id}" placeholder="100" min="1">
+          <button class="btn btn-green btn-sm" onclick="quickAdd('${u.id}','${u.email}')">+Add</button>
         </div>
       </td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
+
+window.filterUsers = function(q) {
+  const filtered = allUsers.filter(u => (u.name||'').toLowerCase().includes(q.toLowerCase()) || (u.email||'').toLowerCase().includes(q.toLowerCase()));
+  renderUsersTable(filtered);
+};
 
 async function loadVouchers() {
   const snap = await getDocs(collection(db, 'vouchers'));
   const vouchers = [];
   snap.forEach(d => vouchers.push({ id: d.id, ...d.data() }));
-
   const active = vouchers.filter(v => !v.usedBy).length;
   document.getElementById('statVouchers').textContent = active;
-
   const tbody = document.getElementById('voucherTableBody');
-  if (vouchers.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No vouchers generated yet.</td></tr>'; return; }
-
+  if (vouchers.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No vouchers yet.</td></tr>'; return; }
   tbody.innerHTML = vouchers.map(v => `
-    <tr class="${v.usedBy ? 'voucher-used' : ''}">
-      <td style="font-family:'Syne',sans-serif;letter-spacing:2px;color:${v.usedBy ? 'var(--muted)' : 'var(--orange)'};">${v.code}</td>
+    <tr>
+      <td style="font-family:'Syne',sans-serif;letter-spacing:2px;color:${v.usedBy ? 'var(--muted)' : 'var(--orange)'};">${v.usedBy ? '<s>'+v.code+'</s>' : v.code}</td>
       <td><span class="token-badge">🪙 ${v.value}</span></td>
-      <td style="color:${v.usedBy ? 'var(--muted)' : 'var(--success)'};">${v.usedBy ? '✓ Used' : '● Active'}</td>
+      <td><span class="sb ${v.usedBy ? 'sb-ready' : 'sb-pending'}">${v.usedBy ? '✓ Used' : '● Active'}</span></td>
       <td style="color:var(--muted);font-size:12px;">${v.usedByEmail || '—'}</td>
-      <td>${!v.usedBy ? `<button class="btn btn-red" style="padding:5px 10px;font-size:12px" onclick="deleteVoucher('${v.id}')">Delete</button>` : ''}</td>
-    </tr>
-  `).join('');
+      <td>${!v.usedBy ? `<button class="btn btn-red btn-sm" onclick="deleteVoucher('${v.id}')">Delete</button>` : ''}</td>
+    </tr>`).join('');
 }
 
 async function loadOrders() {
   const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'), limit(50));
   const snap = await getDocs(q);
-  const orders = [];
-  snap.forEach(d => orders.push({ id: d.id, ...d.data() }));
-
-  document.getElementById('statOrders').textContent = orders.length;
-
-  const tbody = document.getElementById('ordersTableBody');
-  if (orders.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No orders yet.</td></tr>'; return; }
-
-  tbody.innerHTML = orders.map(o => `
-    <tr>
-      <td style="font-size:13px;color:var(--muted)">${o.userEmail || '—'}</td>
-      <td style="font-size:12px;color:var(--muted);max-width:200px;">${(o.items || []).map(i => i.name).join(', ')}</td>
-      <td>₹ ${o.total || 0}</td>
-      <td><span class="token-badge">🪙 ${o.tokensUsed || 0}</span></td>
-      <td style="font-size:12px;color:var(--muted);">${o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleString('en-IN') : '—'}</td>
-    </tr>
-  `).join('');
+  allOrdersData = [];
+  let totalRevenue = 0;
+  snap.forEach(d => { const o = { id: d.id, ...d.data() }; allOrdersData.push(o); totalRevenue += o.tokensUsed || 0; });
+  document.getElementById('statOrders').textContent = allOrdersData.length;
+  document.getElementById('statRevenue').textContent = '🪙 ' + totalRevenue;
+  renderOrdersTable(allOrdersData);
 }
 
-// ── ADD TOKENS BY EMAIL ──
+function renderOrdersTable(orders) {
+  const tbody = document.getElementById('ordersTableBody');
+  if (orders.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No orders yet.</td></tr>'; return; }
+  tbody.innerHTML = orders.map(o => {
+    const sc = { pending:'sb-pending', preparing:'sb-preparing', ready:'sb-ready' };
+    const sl = { pending:'🟡 Pending', preparing:'🟠 Preparing', ready:'✅ Ready' };
+    const status = o.status || 'pending';
+    return `
+    <tr>
+      <td style="font-size:12px;color:var(--muted)">${o.userEmail || '—'}</td>
+      <td style="font-size:12px;color:var(--orange-light)">${o.foodCourt || '—'}</td>
+      <td style="font-size:12px;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(o.items||[]).map(i=>i.name).join(', ')}</td>
+      <td><span class="token-badge">🪙 ${o.tokensUsed||0}</span></td>
+      <td style="font-size:12px;color:var(--muted)">${o.pickupSlotLabel||'—'}</td>
+      <td><span class="sb ${sc[status]||'sb-pending'}">${sl[status]||'Pending'}</span></td>
+      <td style="font-size:12px;color:var(--muted);">${o.createdAt ? new Date(o.createdAt.seconds*1000).toLocaleString('en-IN') : '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+window.filterOrders = function(q) {
+  const filtered = allOrdersData.filter(o => (o.userEmail||'').toLowerCase().includes(q.toLowerCase()));
+  renderOrdersTable(filtered);
+};
+
+// ── ADMIN: ADD TOKENS ──
 window.addTokensToUser = async function() {
   const email = document.getElementById('targetEmail').value.trim();
   const amount = parseInt(document.getElementById('tokenAmount').value);
-  if (!email || !amount || amount < 1) { showMsg('addTokenMsg', 'Please enter a valid email and token amount.', 'error'); return; }
-
+  if (!email || !amount || amount < 1) { showMsg('addTokenMsg', 'Enter valid email and amount.', 'error'); return; }
   const uid = await findUserByEmail(email);
   if (!uid) { showMsg('addTokenMsg', 'No student found with that email.', 'error'); return; }
-
   await updateDoc(doc(db, 'users', uid), { tokens: increment(amount) });
   showMsg('addTokenMsg', `✅ Added ${amount} tokens to ${email}`, 'success');
   document.getElementById('targetEmail').value = '';
@@ -480,47 +577,119 @@ window.quickAdd = async function(uid, email) {
   await loadUsers();
 };
 
-// ── GENERATE VOUCHERS ──
+// ── ADMIN: VOUCHERS ──
 window.generateVouchers = async function() {
   const value = parseInt(document.getElementById('voucherValue').value);
   const count = parseInt(document.getElementById('voucherCount').value);
-  if (!value || !count || value < 1 || count < 1 || count > 50) {
-    showMsg('voucherMsg', 'Enter a valid value and count (max 50).', 'error'); return;
-  }
-
+  if (!value || !count || value < 1 || count < 1 || count > 50) { showMsg('voucherMsg', 'Enter valid value and count (max 50).', 'error'); return; }
   const generated = [];
   for (let i = 0; i < count; i++) {
     const code = generateCode();
     await addDoc(collection(db, 'vouchers'), { code, value, usedBy: null, usedByEmail: null, createdAt: serverTimestamp() });
     generated.push(code);
   }
-
-  const grid = document.getElementById('voucherGrid');
-  grid.innerHTML = generated.map(c => `
-    <div class="voucher-card">
-      <div class="voucher-code">${c}</div>
-      <div class="voucher-meta">🪙 ${value} tokens · Unused</div>
-    </div>
-  `).join('');
-
-  showMsg('voucherMsg', `✅ Generated ${count} voucher codes worth ${value} tokens each.`, 'success');
+  document.getElementById('voucherGrid').innerHTML = generated.map(c => `
+    <div class="voucher-card"><div class="voucher-code">${c}</div><div class="voucher-meta">🪙 ${value} tokens · Unused</div></div>`).join('');
+  showMsg('voucherMsg', `✅ Generated ${count} codes worth ${value} tokens each.`, 'success');
   document.getElementById('voucherValue').value = '';
   document.getElementById('voucherCount').value = '';
   await loadVouchers();
 };
 
 window.deleteVoucher = async function(id) {
-  if (!confirm('Delete this voucher code?')) return;
+  if (!confirm('Delete this voucher?')) return;
   await deleteDoc(doc(db, 'vouchers', id));
   await loadVouchers();
 };
 
+// ── FOOD COURT: ORDERS ──
+let courtOrdersCache = [];
+
+async function loadCourtOrders() {
+  const tbody = document.getElementById('courtOrdersBody');
+  tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Loading…</td></tr>';
+  try {
+    const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'), limit(100));
+    const snap = await getDocs(q);
+    courtOrdersCache = [];
+    snap.forEach(d => {
+      const o = { id: d.id, ...d.data() };
+      // Match court name — foodCourt field can be a single court or comma-separated
+      if (o.foodCourt && o.foodCourt.includes(loggedInCourtName)) courtOrdersCache.push(o);
+    });
+    renderCourtOrders();
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Could not load orders.</td></tr>';
+  }
+}
+
+function renderCourtOrders() {
+  const filtered = currentCourtFilter === 'all' ? courtOrdersCache : courtOrdersCache.filter(o => (o.status||'pending') === currentCourtFilter);
+  const tbody = document.getElementById('courtOrdersBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No ${currentCourtFilter === 'all' ? '' : currentCourtFilter} orders.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(o => {
+    const status = o.status || 'pending';
+    const sc = { pending:'sb-pending', preparing:'sb-preparing', ready:'sb-ready' };
+    return `
+    <tr>
+      <td style="font-family:'Syne',sans-serif;font-size:13px;color:var(--orange)">#${o.id.slice(-6).toUpperCase()}</td>
+      <td style="font-size:13px;color:var(--muted)">${o.userEmail||'—'}</td>
+      <td style="font-size:12px;max-width:160px;">${(o.items||[]).filter(i=> !loggedInCourtName || i.court === loggedInCourtName || !i.court).map(i=>`<span style="display:block;color:var(--muted)">${i.name} ×${i.qty}</span>`).join('')}</td>
+      <td><span class="token-badge">🪙 ${o.tokensUsed||0}</span></td>
+      <td style="font-size:12px;color:var(--orange-light)">${o.pickupSlotLabel||'—'}</td>
+      <td><span class="sb ${sc[status]}">${status.charAt(0).toUpperCase()+status.slice(1)}</span></td>
+      <td>
+        <select class="status-select" onchange="updateOrderStatus('${o.id}', this.value)">
+          <option value="pending"  ${status==='pending'  ?'selected':''}>🟡 Pending</option>
+          <option value="preparing"${status==='preparing'?'selected':''}>🟠 Preparing</option>
+          <option value="ready"    ${status==='ready'    ?'selected':''}>✅ Ready</option>
+        </select>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Update tab counts
+  const counts = { pending:0, preparing:0, ready:0 };
+  courtOrdersCache.forEach(o => { const s = o.status||'pending'; if (counts[s] !== undefined) counts[s]++; });
+  document.getElementById('tabPending').textContent  = `🟡 Pending (${counts.pending})`;
+  document.getElementById('tabPreparing').textContent= `🟠 Preparing (${counts.preparing})`;
+  document.getElementById('tabReady').textContent    = `✅ Ready (${counts.ready})`;
+  document.getElementById('tabAll').textContent      = `📋 All (${courtOrdersCache.length})`;
+}
+
+window.setCourtTab = function(tab) {
+  currentCourtFilter = tab;
+  document.querySelectorAll('.court-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  renderCourtOrders();
+};
+
+window.updateOrderStatus = async function(orderId, newStatus) {
+  try {
+    await updateDoc(doc(db, 'orders', orderId), { status: newStatus });
+    // Update cache
+    const o = courtOrdersCache.find(x => x.id === orderId);
+    if (o) o.status = newStatus;
+    renderCourtOrders();
+    showToast(`Order status → ${newStatus}`);
+  } catch(e) {
+    showToast('Failed to update status');
+  }
+};
+
+// Auto-refresh court orders every 30s
+setInterval(() => { if (loggedInCourtName) loadCourtOrders(); }, 30000);
+
 // ── HELPERS ──
 async function findUserByEmail(email) {
-  const snap = await getDocs(collection(db, 'users'));
-  let found = null;
-  snap.forEach(d => { if (d.data().email === email) found = d.id; });
-  return found;
+  // Use Firestore query instead of fetching all docs
+  const q = query(collection(db, 'users'), where('email', '==', email), limit(1));
+  const snap = await getDocs(q);
+  if (snap.empty) return null;
+  return snap.docs[0].id;
 }
 
 function generateCode() {
@@ -532,10 +701,17 @@ function generateCode() {
 
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
-  el.textContent = text;
-  el.className = 'msg ' + type;
-  setTimeout(() => el.className = 'msg', 4000);
+  if (!el) return;
+  el.textContent = text; el.className = 'msg ' + type;
+  setTimeout(() => { el.className = 'msg'; el.textContent = ''; }, 5000);
 }
+
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+};
 </script>
 </body>
 </html>

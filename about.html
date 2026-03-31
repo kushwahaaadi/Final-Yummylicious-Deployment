@@ -5,482 +5,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Us | Yummylicious</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-:root {
-  --orange: #FF6B00;
-  --orange-light: #FF9240;
-  --orange-glow: rgba(255,107,0,0.18);
-  --dark: #0D0D0D;
-  --card-bg: rgba(18,18,18,0.9);
-  --surface: rgba(30,30,30,0.9);
-  --text: #F5F0EB;
-  --muted: #A09890;
-  --veg: #22c55e;
-  --radius: 16px;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: #0D0D0D;
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.6;
-}
-
-/* Glow orbs */
-body::after {
-  content: '';
-  position: fixed;
-  top: -20%;
-  right: -10%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255,107,0,0.10) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+/* About-specific styles */
+body { background: linear-gradient(160deg, #1a0a00 0%, #0D0D0D 50%, #0a0a1a 100%); }
 
 .glow-bottom {
-  position: fixed;
-  bottom: -20%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
+  position: fixed; bottom: -20%; left: -10%;
+  width: 500px; height: 500px;
   background: radial-gradient(circle, rgba(255,107,0,0.06) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
 
-/* ── NAVBAR ── */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
-  height: 70px;
-  background: rgba(13,13,13,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,107,0,0.15);
+/* ── ABOUT HERO ── */
+.about-hero {
+  position: relative; z-index: 1;
+  padding: 90px 5% 70px; max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
 }
-
-.logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--orange);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.nav-links {
-  display: flex;
-  gap: 4px;
-  list-style: none;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: var(--muted);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-.nav-links li a:hover { color: var(--orange); background: var(--orange-glow); }
-.nav-links li a.active { color: var(--orange); background: var(--orange-glow); }
-
-/* ── HERO ── */
-.hero {
-  position: relative;
-  z-index: 1;
-  padding: 90px 5% 70px;
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-
 .hero-badge {
-  display: inline-block;
-  background: var(--orange-glow);
-  border: 1px solid rgba(255,107,0,0.35);
-  color: var(--orange-light);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  padding: 6px 16px;
-  border-radius: 999px;
-  margin-bottom: 24px;
+  display: inline-block; background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.35);
+  color: var(--orange-light); font-size: 11px; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; padding: 6px 16px; border-radius: 999px; margin-bottom: 24px;
 }
-
 .hero-left h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(44px, 6vw, 72px);
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: 24px;
+  font-family: 'Syne', sans-serif; font-size: clamp(40px, 6vw, 68px);
+  font-weight: 800; line-height: 1.02; margin-bottom: 22px;
 }
+.hero-left h1 em { font-style: normal; color: var(--orange); }
+.hero-left p { color: var(--muted); font-size: 17px; line-height: 1.75; max-width: 420px; }
 
-.hero-left h1 em {
-  font-style: normal;
-  color: var(--orange);
-}
-
-.hero-left p {
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.75;
-  max-width: 420px;
-}
-
-.hero-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
+.hero-right { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .stat-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  text-align: center;
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 22px 18px; text-align: center;
   transition: border-color 0.3s, transform 0.3s;
 }
-.stat-card:hover {
-  border-color: rgba(255,107,0,0.3);
-  transform: translateY(-4px);
-}
+.stat-card:hover { border-color: rgba(255,107,0,0.3); transform: translateY(-4px); }
 .stat-card:first-child {
   grid-column: 1 / -1;
   background: linear-gradient(135deg, rgba(255,107,0,0.12), rgba(255,107,0,0.04));
   border-color: rgba(255,107,0,0.2);
 }
-
 .stat-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 42px;
-  font-weight: 800;
-  color: var(--orange);
-  line-height: 1;
-  margin-bottom: 6px;
+  font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800;
+  color: var(--orange); line-height: 1; margin-bottom: 6px;
 }
-.stat-label {
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 500;
-}
+.stat-label { font-size: 13px; color: var(--muted); font-weight: 500; }
 
-/* ── MAIN CONTENT ── */
+/* ── CONTENT WRAPPER ── */
 .content-wrapper {
-  position: relative;
-  z-index: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 5% 100px;
+  position: relative; z-index: 1; max-width: 1100px;
+  margin: 0 auto; padding: 0 5% 100px;
 }
 
-.section-label {
-  font-family: 'Syne', sans-serif;
-  font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, rgba(255,107,0,0.4), transparent);
-}
-
-/* Mission block */
+/* ── MISSION ── */
 .mission-block {
   background: linear-gradient(135deg, rgba(255,107,0,0.08), rgba(255,107,0,0.02));
-  border: 1px solid rgba(255,107,0,0.2);
-  border-radius: 20px;
-  padding: 44px;
-  margin-bottom: 60px;
+  border: 1px solid rgba(255,107,0,0.2); border-radius: 20px;
+  padding: 44px; margin-bottom: 60px;
 }
-
-.mission-block h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.mission-block p {
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.8;
-  max-width: 700px;
-}
-
+.mission-block h2 { font-family: 'Syne', sans-serif; font-size: 30px; font-weight: 700; margin-bottom: 14px; }
+.mission-block p { color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 700px; }
 .mission-highlight {
-  margin-top: 28px;
-  padding: 20px 24px;
-  background: rgba(255,107,0,0.1);
-  border-left: 3px solid var(--orange);
+  margin-top: 28px; padding: 18px 24px;
+  background: rgba(255,107,0,0.1); border-left: 3px solid var(--orange);
   border-radius: 0 10px 10px 0;
 }
+.mission-highlight p { color: var(--orange-light); font-size: 16px; font-weight: 600; margin: 0; }
 
-.mission-highlight p {
-  color: var(--orange-light);
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* How it works */
+/* ── HOW IT WORKS ── */
 .how-section { margin-bottom: 60px; }
-
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 28px;
-}
-
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
 .step-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 28px 20px;
-  text-align: center;
-  transition: border-color 0.3s, transform 0.3s;
-  position: relative;
-  overflow: hidden;
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 26px 18px; text-align: center;
+  transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden;
 }
-.step-card:hover {
-  border-color: rgba(255,107,0,0.25);
-  transform: translateY(-4px);
-}
+.step-card:hover { border-color: rgba(255,107,0,0.25); transform: translateY(-4px); }
 .step-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(to right, var(--orange), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
+  opacity: 0; transition: opacity 0.3s;
 }
 .step-card:hover::before { opacity: 1; }
+.step-num { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; color: rgba(255,107,0,0.12); line-height: 1; margin-bottom: 10px; }
+.step-icon { font-size: 28px; margin-bottom: 10px; }
+.step-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-.step-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 48px;
-  font-weight: 800;
-  color: rgba(255,107,0,0.15);
-  line-height: 1;
-  margin-bottom: 12px;
-}
-
-.step-icon { font-size: 28px; margin-bottom: 12px; }
-
-.step-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.step-desc {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-/* Values */
+/* ── VALUES ── */
 .values-section { margin-bottom: 60px; }
-
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 28px;
-}
-
+.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
 .value-card {
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 30px;
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 24px;
+  display: flex; gap: 20px; align-items: flex-start;
   transition: border-color 0.3s, transform 0.3s;
 }
-.value-card:hover {
-  border-color: rgba(255,107,0,0.25);
-  transform: translateY(-3px);
-}
-
+.value-card:hover { border-color: rgba(255,107,0,0.25); transform: translateY(-3px); }
 .value-icon {
-  font-size: 32px;
-  flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  background: var(--orange-glow);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 28px; flex-shrink: 0; width: 52px; height: 52px;
+  background: var(--orange-glow); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
 }
+.value-text h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.value-text p { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
-.value-text h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.value-text p {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-/* Made by students */
+/* ── STUDENT BLOCK ── */
 .student-block {
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 20px;
-  padding: 44px;
-  display: flex;
-  gap: 50px;
-  align-items: center;
+  background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px; padding: 44px;
+  display: flex; gap: 50px; align-items: center; margin-bottom: 60px;
 }
-
 .student-block-left { flex: 1; }
-
-.student-block-left h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.student-block-left p {
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.75;
-  margin-bottom: 16px;
-}
-
-.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.student-block-left h2 { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 700; margin-bottom: 14px; }
+.student-block-left p { color: var(--muted); font-size: 16px; line-height: 1.75; margin-bottom: 14px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 .tag {
-  background: var(--orange-glow);
-  border: 1px solid rgba(255,107,0,0.25);
-  color: var(--orange-light);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 14px;
-  border-radius: 999px;
-  letter-spacing: 0.5px;
+  background: var(--orange-glow); border: 1px solid rgba(255,107,0,0.25);
+  color: var(--orange-light); font-size: 12px; font-weight: 600;
+  padding: 5px 14px; border-radius: 999px;
 }
-
 .student-block-right {
-  flex-shrink: 0;
-  text-align: center;
-  padding: 32px 40px;
+  flex-shrink: 0; text-align: center; padding: 30px 36px;
   background: linear-gradient(135deg, rgba(255,107,0,0.1), rgba(255,107,0,0.03));
-  border-radius: 16px;
-  border: 1px solid rgba(255,107,0,0.15);
+  border-radius: 16px; border: 1px solid rgba(255,107,0,0.15);
 }
-
-.uni-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--orange);
-  margin-bottom: 6px;
-}
-
-.uni-sub {
-  font-size: 13px;
-  color: var(--muted);
-}
+.uni-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--orange); margin-bottom: 4px; }
+.uni-sub { font-size: 13px; color: var(--muted); }
 
 /* ── FOOTER ── */
 footer {
-  position: relative;
-  z-index: 1;
+  position: relative; z-index: 1;
   border-top: 1px solid rgba(255,255,255,0.07);
-  padding: 40px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  padding: 36px 5%;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
 }
-
-.footer-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--orange);
-  letter-spacing: 2px;
-}
-
+.footer-logo { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--orange); letter-spacing: 2px; }
 .footer-copy { font-size: 13px; color: var(--muted); }
-
-.footer-email {
-  font-size: 13px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.footer-email a {
-  color: var(--orange-light);
-  text-decoration: none;
-  font-weight: 600;
-}
+.footer-email { font-size: 13px; color: var(--muted); }
+.footer-email a { color: var(--orange-light); text-decoration: none; font-weight: 600; }
 .footer-email a:hover { text-decoration: underline; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; gap: 40px; }
+  .about-hero { grid-template-columns: 1fr; gap: 40px; }
   .hero-right { grid-template-columns: repeat(3, 1fr); }
   .hero-right .stat-card:first-child { grid-column: 1/-1; }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
   .student-block { flex-direction: column; }
   .student-block-right { width: 100%; }
 }
-
 @media (max-width: 600px) {
   .values-grid { grid-template-columns: 1fr; }
-  .steps-grid { grid-template-columns: 1fr 1fr; }
   .hero-right { grid-template-columns: 1fr 1fr; }
   footer { flex-direction: column; text-align: center; }
-  .nav-links li a { padding: 6px 10px; font-size: 13px; }
+  .mission-block { padding: 28px 24px; }
 }
 </style>
 </head>
@@ -490,15 +172,23 @@ footer {
 <!-- NAVBAR -->
 <nav class="navbar">
   <a href="index.html" class="logo">Yummylicious</a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html" class="active">About</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
+  <div class="nav-center">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="#" id="contact-link">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+  </div>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="#" id="mobile-contact-link">Contact</a>
+</div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="about-hero">
   <div class="hero-left">
     <div class="hero-badge">Our Story</div>
     <h1>Built for <em>Students,</em> by Students</h1>
@@ -523,17 +213,15 @@ footer {
 <!-- CONTENT -->
 <div class="content-wrapper">
 
-  <!-- Mission -->
   <div class="section-label">Mission</div>
   <div class="mission-block">
     <h2>Why We Exist</h2>
     <p>Yummylicious was created to solve a very real problem on campus — the time lost standing in food court queues. Every minute you spend waiting is a minute you could spend studying, resting, or doing something you actually enjoy.</p>
     <div class="mission-highlight">
-      <p>Browse any campus food court, place your order in advance, and walk in only when it's ready. Simple as that.</p>
+      <p>Browse any campus food court, pick your time slot, place your order, and walk in only when it's ready. Simple as that.</p>
     </div>
   </div>
 
-  <!-- How it works -->
   <div class="how-section">
     <div class="section-label">How It Works</div>
     <div class="steps-grid">
@@ -545,26 +233,25 @@ footer {
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
-        <div class="step-icon">🛒</div>
-        <div class="step-title">Order</div>
-        <div class="step-desc">Add items to your cart from one or multiple food courts at once.</div>
+        <div class="step-icon">⏱️</div>
+        <div class="step-title">Pick a Slot</div>
+        <div class="step-desc">Choose a 15-minute pickup window from 8 AM to 10 PM to avoid the rush.</div>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
-        <div class="step-icon">⏱️</div>
-        <div class="step-title">Wait (Less)</div>
-        <div class="step-desc">Your order is prepared ahead of time. No more standing around doing nothing.</div>
+        <div class="step-icon">🪙</div>
+        <div class="step-title">Pay with Tokens</div>
+        <div class="step-desc">Use your campus token wallet — 1 token = ₹1. Fast, cashless, and hassle-free.</div>
       </div>
       <div class="step-card">
         <div class="step-num">04</div>
         <div class="step-icon">✅</div>
-        <div class="step-title">Pick Up & Pay</div>
-        <div class="step-desc">Walk in, grab your food, pay at the counter. Done in under a minute.</div>
+        <div class="step-title">Pick Up</div>
+        <div class="step-desc">Show your Order ID at the counter when your order is marked Ready. Done.</div>
       </div>
     </div>
   </div>
 
-  <!-- Values -->
   <div class="values-section">
     <div class="section-label">Our Values</div>
     <div class="values-grid">
@@ -572,7 +259,7 @@ footer {
         <div class="value-icon">⚡</div>
         <div class="value-text">
           <h3>Time-First</h3>
-          <p>We obsess over saving you time. Every feature we build is designed to get you from hungry to eating as fast as possible.</p>
+          <p>We obsess over saving you time. Every feature is designed to get you from hungry to eating as fast as possible.</p>
         </div>
       </div>
       <div class="value-card">
@@ -586,25 +273,24 @@ footer {
         <div class="value-icon">🎯</div>
         <div class="value-text">
           <h3>Radically Simple</h3>
-          <p>No accounts required, no payment gateways, no fuss. Browse, order, pick up. That's the whole product.</p>
+          <p>Browse, pick a slot, pay with tokens, pick up. That's the whole product — no unnecessary steps.</p>
         </div>
       </div>
       <div class="value-card">
         <div class="value-icon">🏫</div>
         <div class="value-text">
           <h3>Campus-Only Focus</h3>
-          <p>We work directly with the vendors at Bennett University, building something that works for this specific community.</p>
+          <p>We work directly with vendors at Bennett University, building something that works for this specific community.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Student block -->
   <div class="student-block">
     <div class="student-block-left">
       <div class="section-label" style="margin-bottom:14px;">About the Creator</div>
       <h2>Made at Bennett University</h2>
-      <p>This project was built by a student who wanted a better experience at the campus food courts. It started as a simple idea and grew into a full ordering platform covering all six food courts on campus.</p>
+      <p>This project was built by a student who wanted a better experience at the campus food courts. It started as a simple idea and grew into a full ordering platform covering all six food courts on campus — with order tracking, time slots, and a token wallet.</p>
       <p>If you have feedback, ideas, or want to collaborate — reach out. This is a living project and it gets better with every suggestion.</p>
       <div class="tag-row">
         <span class="tag">Bennett University</span>
@@ -617,7 +303,7 @@ footer {
       <div style="font-size:48px;margin-bottom:12px;">🏛️</div>
       <div class="uni-name">Bennett University</div>
       <div class="uni-sub">Greater Noida, India</div>
-      <div style="margin-top:16px;font-size:13px;color:var(--muted);line-height:1.6;">
+      <div style="margin-top:16px;font-size:13px;color:var(--muted);line-height:1.7;">
         6 Food Courts<br>Thousands of Students<br>One Ordering Platform
       </div>
     </div>
@@ -629,10 +315,34 @@ footer {
 <footer>
   <div class="footer-logo">YUMMYLICIOUS</div>
   <div class="footer-copy">© 2025 · Made for students, by students</div>
-  <div class="footer-email">
-    Questions? <a href="mailto:kushwahaaadi007@gmail.com">kushwahaaadi007@gmail.com</a>
-  </div>
+  <div class="footer-email">Questions? <a href="mailto:kushwahaaadi007@gmail.com">kushwahaaadi007@gmail.com</a></div>
 </footer>
 
+<!-- CONTACT POPUP (reused from shared) -->
+<div class="overlay-popup" id="contactPopup">
+  <div class="contact-popup-box">
+    <h2 class="contact-popup-head">Contact Us <button class="popup-close-x" onclick="document.getElementById('contactPopup').classList.remove('open')">✕</button></h2>
+    <form action="https://formsubmit.co/kushwahaaadi007@gmail.com" method="POST">
+      <div class="form-group"><label>Your Name</label><input type="text" name="name" required placeholder="e.g. Aaditya Kushwaha"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" name="email" required placeholder="your@email.com"></div>
+      <div class="form-group"><label>Message</label><textarea name="query" required placeholder="Tell us how we can help…"></textarea></div>
+      <input type="hidden" name="_subject" value="Yummylicious Contact Form">
+      <input type="hidden" name="_captcha" value="false">
+      <button type="submit" class="checkout-btn" style="margin-top:4px;">Send Message</button>
+    </form>
+  </div>
+</div>
+
+<script>
+function toggleMobileMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+
+// Fix contact links on about page
+['contact-link', 'mobile-contact-link'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', e => { e.preventDefault(); document.getElementById('contactPopup').classList.add('open'); });
+});
+
+document.getElementById('contactPopup').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
+</script>
 </body>
 </html>
